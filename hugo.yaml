@@ -1,0 +1,53 @@
+baseURL: https://dsa.interes.group
+languageCode: sk-sk
+title: Dátové štruktúry a algoritmy
+#enableGitInfo: true
+module:
+  imports:
+    - path: github.com/imfing/hextra
+menu:
+  main:
+    - name: Prednášky
+      pageRef: /lectures
+      weight: 1
+    - name: Cvičenia
+      pageRef: /exercises
+      weight: 2
+    - name: Príklady
+      pageRef: /examples
+      weight: 3
+    - name: Zadania
+      pageRef: /assignments
+      weight: 4
+    - name: Vyhľadávanie
+      weight: 5
+      params:
+        type: search
+    - name: GitHub
+      weight: 6
+      url: "https://github.com/Interes-Group/PEVS-DSA-BIAX10031"
+      params:
+        icon: github
+    - name: Youtube
+      weight: 7
+      url: "https://www.youtube.com/channel/UCRGOmuTb6Bdsmneu6cTNNgg"
+      params:
+        icon: youtube
+params:
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: logo.png
+      dark: logo.png
+      link: /
+      height: 50
+      width: 50
+  editUrl:
+    enable: false
+  theme:
+    default: system
+    displayToggle: true
+  displayUpdateDate: true
+  dateFormat: "02.01.2025"
+
