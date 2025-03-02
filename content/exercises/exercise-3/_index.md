@@ -1,6 +1,6 @@
 ---
 date: '2025-03-02T12:22:28+01:00'
-title: 'Cvičenie 3'
+title: 'Cvičenie 03'
 type: 'exercise'
 ---
 

@@ -50,4 +50,31 @@ params:
     displayToggle: true
   displayUpdateDate: true
   dateFormat: "02.01.2025"
+services:
+  googleAnalytics:
+    id: "G-9H7RXXLR87"
+privacy:
+  disqus:
+    disable: true
+  googleAnalytics:
+    disable: false
+    respectDoNotTrack: false
+  instagram:
+    disable: true
+    simple: false
+  twitter:
+    disable: true
+    enableDNT: false
+    simple: false
+  vimeo:
+    disable: true
+    enableDNT: false
+    simple: false
+  x:
+    disable: true
+    enableDNT: false
+    simple: false
+  youTube:
+    disable: false
+    privacyEnhanced: false
 

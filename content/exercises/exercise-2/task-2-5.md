@@ -52,8 +52,204 @@ demonštráciu implementácie vytvorte vo funkcii `main` aspoň tri objekty a za
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+// Forward deklarácia triedy Student pre správne fungovanie ukazovateľov v triede Kurz
+class Student;
+
+class Kurz {
+private:
+    std::string nazov;
+    std::string kod;
+    int kapacita;
+    std::vector<Student*> zapisani_studenti;
+
+public:
+    // Konštruktor na inicializáciu kurzu
+    Kurz(const std::string& nazov, const std::string& kod, int kapacita)
+        : nazov(nazov), kod(kod), kapacita(kapacita) {}
+
+    std::string getKod() const { return kod; }
+    std::string getNazov() const { return nazov; }
+
+    // Metóda na pridanie študenta do kurzu
+    bool pridajStudenta(Student* student);
+
+    // Výpis zapísaných študentov
+    void zobrazZapisanychStudentov() const;
+};
+
+class Student {
+private:
+    std::string meno;
+    std::string id;
+    std::vector<Kurz*> zapisane_kurzy;
+
+public:
+    // Konštruktor na inicializáciu študenta
+    Student(const std::string& meno, const std::string& id)
+        : meno(meno), id(id) {}
+
+    std::string getId() const { return id; }
+    std::string getMeno() const { return meno; }
+
+    // Metóda na zápis do kurzu
+    void zapisDoKurzu(Kurz* kurz) {
+        zapisane_kurzy.push_back(kurz);
+    }
+
+    // Výpis zapísaných kurzov
+    void zobrazZapisaneKurzy() const {
+        std::cout << "Študent: " << meno << " (" << id << ") je zapísaný na kurzy:\n";
+        if (zapisane_kurzy.empty()) {
+            std::cout << "  - Žiadne zapísané kurzy\n";
+        } else {
+            for (const auto& kurz : zapisane_kurzy) {
+                std::cout << "  - " << kurz->getNazov() << " (" << kurz->getKod() << ")\n";
+            }
+        }
+        std::cout << "----------------------\n";
+    }
+};
+
+// Implementácia metódy na pridanie študenta do kurzu
+bool Kurz::pridajStudenta(Student* student) {
+    if (zapisani_studenti.size() < static_cast<size_t>(kapacita)) {
+        zapisani_studenti.push_back(student);
+        student->zapisDoKurzu(this);
+        return true;
+    } else {
+        std::cout << "Kurz " << nazov << " je plný! Študent " << student->getMeno() << " sa nemôže zapísať.\n";
+        return false;
+    }
+}
+
+// Implementácia metódy na výpis zapísaných študentov v kurze
+void Kurz::zobrazZapisanychStudentov() const {
+    std::cout << "Kurz: " << nazov << " (" << kod << ") - Kapacita: " << kapacita << "\n";
+    std::cout << "Zapísaní študenti:\n";
+    if (zapisani_studenti.empty()) {
+        std::cout << "  - Žiadni študenti nie sú zapísaní\n";
+    } else {
+        for (const auto& student : zapisani_studenti) {
+            std::cout << "  - " << student->getMeno() << " (" << student->getId() << ")\n";
+        }
+    }
+    std::cout << "----------------------\n";
+}
+
+class Univerzita {
+private:
+    std::vector<Student> studenti;
+    std::vector<Kurz> kurzy;
+
+public:
+    // Metóda na pridanie nového študenta
+    void pridajStudenta(const std::string& meno, const std::string& id) {
+        studenti.emplace_back(meno, id);
+    }
+
+    // Metóda na pridanie nového kurzu
+    void pridajKurz(const std::string& nazov, const std::string& kod, int kapacita) {
+        kurzy.emplace_back(nazov, kod, kapacita);
+    }
+
+    // Metóda na zápis študenta do kurzu
+    void zapisStudentaDoKurzu(const std::string& studentId, const std::string& kodKurzu) {
+        Student* studentPtr = nullptr;
+        Kurz* kurzPtr = nullptr;
+
+        // Nájdeme študenta podľa ID
+        for (auto& student : studenti) {
+            if (student.getId() == studentId) {
+                studentPtr = &student;
+                break;
+            }
+        }
+
+        // Nájdeme kurz podľa kódu
+        for (auto& kurz : kurzy) {
+            if (kurz.getKod() == kodKurzu) {
+                kurzPtr = &kurz;
+                break;
+            }
+        }
+
+        // Skontrolujeme, či sa našli obe entity
+        if (studentPtr && kurzPtr) {
+            kurzPtr->pridajStudenta(studentPtr);
+        } else {
+            std::cout << "Chyba: Študent alebo kurz nebol nájdený.\n";
+        }
+    }
+
+    // Metóda na zobrazenie všetkých študentov a kurzov
+    void zobrazStudentovAKurzy() const {
+        std::cout << "Zoznam študentov:\n";
+        if (studenti.empty()) {
+            std::cout << "  - Žiadni študenti nie sú registrovaní\n";
+        } else {
+            for (const auto& student : studenti) {
+                student.zobrazZapisaneKurzy();
+            }
+        }
+
+        std::cout << "Zoznam kurzov:\n";
+        if (kurzy.empty()) {
+            std::cout << "  - Žiadne kurzy nie sú registrované\n";
+        } else {
+            for (const auto& kurz : kurzy) {
+                kurz.zobrazZapisanychStudentov();
+            }
+        }
+    }
+};
+
+int main() {
+    Univerzita univerzita;
+
+    // Pridanie kurzov
+    univerzita.pridajKurz("Matematika", "MAT101", 2);
+    univerzita.pridajKurz("Programovanie", "PROG202", 3);
+    univerzita.pridajKurz("Fyzika", "FZK303", 1);
+
+    // Pridanie študentov
+    univerzita.pridajStudenta("Ján Novák", "S001");
+    univerzita.pridajStudenta("Mária Horváthová", "S002");
+    univerzita.pridajStudenta("Peter Kováč", "S003");
+
+    // Zápis študentov do kurzov
+    univerzita.zapisStudentaDoKurzu("S001", "MAT101");
+    univerzita.zapisStudentaDoKurzu("S002", "MAT101");
+    univerzita.zapisStudentaDoKurzu("S003", "MAT101"); // Tento zápis by mal zlyhať (kapacita 2)
+
+    univerzita.zapisStudentaDoKurzu("S002", "PROG202");
+    univerzita.zapisStudentaDoKurzu("S003", "FZK303");
+    univerzita.zapisStudentaDoKurzu("S001", "PROG202");
+
+    // Zobrazenie študentov a kurzov
+    univerzita.zobrazStudentovAKurzy();
+
+    return 0;
+}
+```
+
+### **Vysvetlenie:**
+- **Trieda `Kurz`** umožňuje pridávať študentov do kurzu s kontrolou kapacity.
+- **Trieda `Student`** ukladá meno, ID a zoznam zapísaných kurzov.
+- **Trieda `Univerzita`** spravuje zoznam študentov a kurzov a umožňuje zapisovať študentov do kurzov na základe ID.
+
+### **Príklad výstupu:**
+```
+Kurz Matematika je plný! Študent Peter Kováč sa nemôže zapísať.
+Zoznam študentov:
+Študent: Ján Novák (S001) je zapísaný na kurzy:
+  - Matematika (MAT101)
+  - Programovanie (PROG202)
+...
+```
 
 {{< /details >}}
