@@ -1,6 +1,5 @@
 ---
 date: '2025-02-13T18:13:58+01:00'
-
 title: 'Príklady'
 cascade:
     type: docs

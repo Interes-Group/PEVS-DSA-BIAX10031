@@ -1,6 +1,5 @@
 ---
 date: '2025-02-13T17:58:15+01:00'
-
 title: 'Dátové štruktúry a algoritmy'
 ---
 

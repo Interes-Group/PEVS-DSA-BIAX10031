@@ -1,6 +1,5 @@
 ---
 date: '2025-02-13T18:13:21+01:00'
-
 title: 'Cvičenia'
 cascade:
   type: docs
@@ -24,4 +23,5 @@ Cvičenia sa konajú každý **pondelok od 10:10 do 11:45 v učebni 103 (PC3)**.
 {{< cards cols="2" >}}
   {{< card link="./exercise-1/" title="Cvičenie 1" subtitle="Jednoduché zopakovanie" icon="" >}}
   {{< card link="./exercise-2/" title="Cvičenie 2" subtitle="Triedy a objekty" icon="" >}}
+  {{< card link="./exercise-3/" title="Cvičenie 3" subtitle="Kontajnery" icon="" >}}
 {{< /cards >}}

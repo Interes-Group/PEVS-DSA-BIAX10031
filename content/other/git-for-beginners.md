@@ -1,6 +1,5 @@
 ---
 date: '2025-02-14T18:22:04+01:00'
-
 title: 'Git pre začiatočníkov'
 ---
 
