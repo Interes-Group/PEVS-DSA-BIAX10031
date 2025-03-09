@@ -2,6 +2,7 @@
 date: '2025-03-02T12:22:28+01:00'
 title: 'Cvičenie 03'
 type: 'exercise'
+weight: 3
 ---
 
 Na tomto cvičení sa zoznámime s implementáciou základných dynamických dátových štruktúr, ktoré sú kľúčové pre

@@ -1,6 +1,6 @@
 ---
 date: '2025-02-27T11:55:36+01:00'
-title: 'Základy tried'
+title: 'Trieda'
 ---
 
 ```cpp

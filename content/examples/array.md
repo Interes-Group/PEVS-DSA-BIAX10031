@@ -1,6 +1,6 @@
 ---
 date: '2025-02-19T18:27:45+01:00'
-title: 'Základy polí'
+title: 'Polia'
 ---
 
 ```cpp
