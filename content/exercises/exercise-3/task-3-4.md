@@ -51,8 +51,107 @@ cout << zasobnik.to_string() << endl; // Milan
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
+```cpp
+#include <iostream>
+#include <string>
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+using namespace std;
+
+// Trieda reprezentujúca uzol v zásobníku
+class Node {
+public:
+    string value; // Hodnota uzla
+    Node* next; // Ukazovateľ na ďalší uzol (nižšie v zásobníku)
+
+    // Konštruktor inicializuje hodnotu a nastaví ukazovateľ na nullptr
+    Node(string val) : value(val), next(nullptr) {}
+};
+
+// Trieda reprezentujúca zásobník (LIFO)
+class Stack {
+private:
+    Node* topNode; // Ukazovateľ na vrchný uzol zásobníka
+    int count; // Počet prvkov v zásobníku
+
+public:
+    Stack() : topNode(nullptr), count(0) {} // Konštruktor inicializuje prázdny zásobník
+
+    // Dekštruktor, ktorý uvoľní všetky uzly zásobníka
+    ~Stack() {
+        while (topNode) {
+            Node* temp = topNode;
+            topNode = topNode->next;
+            delete temp;
+        }
+    }
+
+    // Funkcia vloží prvok na vrch zásobníka
+    void push(string value) {
+        Node* newNode = new Node(value);
+        newNode->next = topNode;
+        topNode = newNode;
+        count++;
+    }
+
+    // Funkcia odstráni a vráti vrchný prvok zásobníka
+    string pop() {
+        if (!topNode) return "";
+        Node* temp = topNode;
+        string value = temp->value;
+        topNode = topNode->next;
+        delete temp;
+        count--;
+        return value;
+    }
+
+    // Funkcia vráti hodnotu vrchného prvku zásobníka bez jeho odstránenia
+    string top() {
+        return topNode ? topNode->value : "";
+    }
+
+    // Funkcia vráti počet prvkov v zásobníku
+    int size() {
+        return count;
+    }
+
+    // Funkcia vráti reťazcovú reprezentáciu zásobníka (hodnoty oddelené čiarkou)
+    string to_string() {
+        if (!topNode) return "";
+        string result = "";
+        Node* current = topNode;
+        while (current) {
+            result += current->value;
+            if (current->next) result += ", ";
+            current = current->next;
+        }
+        return result;
+    }
+};
+
+int main() {
+    Stack zasobnik;
+
+    // Vkladanie prvkov do zásobníka
+    zasobnik.push("Milan");
+    zasobnik.push("Jano");
+    zasobnik.push("Fero");
+    cout << zasobnik.to_string() << endl; // Fero, Jano, Milan
+
+    // Výpis vrchného prvku a veľkosti zásobníka
+    cout << "Top: " << zasobnik.top() << endl; // Fero
+    cout << "Size: " << zasobnik.size() << endl; // 3
+
+    // Odstránenie prvku zo zásobníka
+    cout << "Pop: " << zasobnik.pop() << endl; // Fero
+    cout << zasobnik.to_string() << endl; // Jano, Milan
+
+    // Ďalšie odstránenie prvku
+    cout << "Pop: " << zasobnik.pop() << endl; // Jano
+    cout << "Top: " << zasobnik.top() << endl; // Milan
+    cout << zasobnik.to_string() << endl; // Milan
+
+    return 0;
+}
+```
 
 {{< /details >}}

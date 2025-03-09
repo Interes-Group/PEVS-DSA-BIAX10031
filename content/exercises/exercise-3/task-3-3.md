@@ -64,8 +64,154 @@ cout << zoznam.to_string() << endl; // Milan, Mária, Fero
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
+```cpp
+#include <iostream>
+#include <string>
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+using namespace std;
+
+// Trieda reprezentujúca uzol v cyklickom obojstranne zreťazenom zozname
+class Node {
+public:
+    string value; // Hodnota uzla
+    Node* next; // Ukazovateľ na ďalší uzol
+    Node* prev; // Ukazovateľ na predchádzajúci uzol
+
+    // Konštruktor inicializuje hodnotu a nastaví ukazovatele na nullptr
+    Node(string val) : value(val), next(nullptr), prev(nullptr) {}
+};
+
+// Trieda reprezentujúca cyklický obojstranne zreťazený zoznam
+class CircularDoublyLinkedList {
+private:
+    Node* head; // Ukazovateľ na prvý uzol zoznamu
+
+public:
+    CircularDoublyLinkedList() : head(nullptr) {} // Konštruktor inicializuje prázdny zoznam
+
+    // Dekštruktor, ktorý uvoľní všetky uzly zoznamu
+    ~CircularDoublyLinkedList() {
+        if (!head) return;
+        Node* current = head;
+        do {
+            Node* temp = current;
+            current = current->next;
+            delete temp;
+        } while (current != head);
+    }
+
+    // Funkcia vráti hodnotu prvého uzla, ak existuje, inak vráti prázdny reťazec
+    string begin() {
+        return head ? head->value : "";
+    }
+
+    // Funkcia vráti hodnotu posledného uzla, ak existuje, inak vráti prázdny reťazec
+    string end() {
+        return head ? head->prev->value : "";
+    }
+
+    // Funkcia vráti hodnotu uzla na danom indexe, ak existuje, inak vráti prázdny reťazec
+    string at(int index) {
+        if (!head) return "";
+        Node* current = head;
+        for (int i = 0; i < index; i++) {
+            current = current->next;
+            if (current == head) return ""; // Ak sa vrátime na začiatok, index je mimo rozsahu
+        }
+        return current->value;
+    }
+
+    // Funkcia vráti hodnotu nasledujúceho prvku od zadaného indexu
+    string next(int index) {
+        if (!head) return "";
+        Node* current = head;
+        for (int i = 0; i < index; i++) {
+            current = current->next;
+            if (current == head) return "";
+        }
+        return current->next->value;
+    }
+
+    // Vloží nový uzol na daný index. Ak index neexistuje, pridá uzol na koniec.
+    void insert(int index, string value) {
+        Node* newNode = new Node(value);
+        if (!head) { // Ak je zoznam prázdny, nový uzol sa stáva hlavou a cyklizuje sa
+            head = newNode;
+            head->next = head;
+            head->prev = head;
+            return;
+        }
+        
+        Node* current = head;
+        for (int i = 0; i < index && current->next != head; i++) {
+            current = current->next;
+        }
+        newNode->next = current->next;
+        newNode->prev = current;
+        current->next->prev = newNode;
+        current->next = newNode;
+    }
+
+    // Odstráni uzol na danom indexe, ak existuje
+    void remove(int index) {
+        if (!head) return;
+        Node* current = head;
+        for (int i = 0; i < index; i++) {
+            current = current->next;
+            if (current == head) return; // Ak sa vrátime na začiatok, index je mimo rozsahu
+        }
+        if (current == head && current->next == head) {
+            delete head;
+            head = nullptr;
+            return;
+        }
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+        if (current == head) head = current->next;
+        delete current;
+    }
+
+    // Funkcia vráti reťazcovú reprezentáciu zoznamu oddelenú čiarkami
+    string to_string() {
+        if (!head) return "";
+        string result = "";
+        Node* current = head;
+        do {
+            result += current->value;
+            if (current->next != head) result += ", ";
+            current = current->next;
+        } while (current != head);
+        return result;
+    }
+};
+
+int main() {
+    CircularDoublyLinkedList zoznam;
+
+    // Vkladanie prvkov na koniec zoznamu
+    zoznam.insert(99, "Milan");
+    zoznam.insert(99, "Jano");
+    zoznam.insert(99, "Fero");
+    cout << zoznam.to_string() << endl; // Milan, Jano, Fero
+
+    // Výpis prvého a posledného prvku
+    cout << "First: " << zoznam.begin() << endl; // Milan
+    cout << "Last: " << zoznam.end() << endl; // Fero
+    cout << "At index 1: " << zoznam.at(1) << endl; // Jano
+    
+    // Výpis nasledujúceho prvku od indexu 2
+    cout << "Next after index 2: " << zoznam.next(2) << endl; // Milan
+
+    // Odstránenie prvku na indexe 1
+    zoznam.remove(1);
+    cout << zoznam.to_string() << endl; // Milan, Fero
+    
+    // Vloženie nového prvku na index 1
+    zoznam.insert(1, "Mária");
+    cout << zoznam.to_string() << endl; // Milan, Mária, Fero
+
+    return 0;
+}
+```
 
 {{< /details >}}
