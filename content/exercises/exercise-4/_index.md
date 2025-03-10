@@ -37,7 +37,7 @@ Riešenia na jednotlivé úlohy budú uverejnené neskôr.
 ## Úlohy
 
 {{< cards cols="2" >}}
-{{< card link="./task-X-X" title="Úloha 4.1" subtitle="Prechádzanie stromu do hĺbky" icon="document" >}}
-{{< card link="./task-X-X" title="Úloha 4.2" subtitle="Prefixový strom (Trie)" icon="document" >}}
-{{< card link="./task-X-X" title="Úloha 4.3" subtitle="Váhovaný graf" icon="document" >}}
+{{< card link="./task-4-1" title="Úloha 4.1" subtitle="Prechádzanie stromu do hĺbky" icon="document" >}}
+{{< card link="./task-4-2" title="Úloha 4.2" subtitle="Prefixový strom (Trie)" icon="document" >}}
+{{< card link="./task-4-2" title="Úloha 4.3" subtitle="Ováhovaný graf" icon="document" >}}
 {{< /cards >}}
