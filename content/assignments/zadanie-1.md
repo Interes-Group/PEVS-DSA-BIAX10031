@@ -12,7 +12,7 @@ title: 'Zadanie 1'
 Zadanie je distribuované aj odovzdané pomocou platformy GitHub, modulu Classroom. Pre prihlásenie sa na vypracovanie 
 zadania sa prihláste svojim účtom na platformu GitHub a následne kliknite na tento odkaz:
 
-[https://classroom.github.com/a/9fAWfj4r](https://classroom.github.com/a/2GNeZaoi)
+[https://classroom.github.com/a/2GNeZaoi](https://classroom.github.com/a/2GNeZaoi)
 
 Po potvrdení sa vám vytvorí súkromný repozitár s nastaveným projektom a so znením zadania v súbore README.md (znenie zadanie sa nachádza aj nižšie ⬇).
 Pozorne si zadanie prečítajte pre začatím vypracovania.
