@@ -24,6 +24,10 @@ Pri každej aktualizácii kódu je spustený GitHub automatizácia, ktorý over�
 
 V prípade otázok, problémov alebo akejkoľvek potreby konzultácií môžte kontaktovať cvičiaceho na MS Teams alebo emailom.
 
+## Video s inštrukciami
+
+{{< youtube "mKHEAcSztfw" >}}
+
 
 ---
 
