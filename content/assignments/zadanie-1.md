@@ -12,7 +12,7 @@ title: 'Zadanie 1'
 Zadanie je distribuované aj odovzdané pomocou platformy GitHub, modulu Classroom. Pre prihlásenie sa na vypracovanie 
 zadania sa prihláste svojim účtom na platformu GitHub a následne kliknite na tento odkaz:
 
-[https://classroom.github.com/a/9fAWfj4r](https://classroom.github.com/a/9fAWfj4r)
+[https://classroom.github.com/a/9fAWfj4r](https://classroom.github.com/a/2GNeZaoi)
 
 Po potvrdení sa vám vytvorí súkromný repozitár s nastaveným projektom a so znením zadania v súbore README.md (znenie zadanie sa nachádza aj nižšie ⬇).
 Pozorne si zadanie prečítajte pre začatím vypracovania.
@@ -24,7 +24,9 @@ Pri každej aktualizácii kódu je spustený GitHub automatizácia, ktorý over�
 
 V prípade otázok, problémov alebo akejkoľvek potreby konzultácií môžte kontaktovať cvičiaceho na MS Teams alebo emailom.
 
+
 ---
+
 
 # Semestrálne zadanie 1 - Telefónny zoznam
 
@@ -42,9 +44,9 @@ Na diagrame vyššie je uvedený príklad prefixového stromu (modrým sú ozna�
 - Emil Fog - 0914777666
 - Sant Fog - 0905333444
 
-Aplikácia ponúka aj mód telepredajcu, ktorý musí zatelefonovať určitým ľuďom. Po vyhľadaní telefónneho čísla ho može používateľ zaradiť do fronty telefónnych čísel. Používateľ si tak môže vypýtať telefónne číslo, ktoré je na rade na zatelefonovanie. Následne používateľ môže odkliknúť, že na číslo zatelefonoval a zobrazí sa mu ďalšie telefónne číslo v poradí.
+Aplikácia ponúka aj mód tele-predajcu, ktorý musí zatelefonovať určitým ľuďom. Po vyhľadaní telefónneho čísla ho môže používateľ zaradiť do fronty telefónnych čísel. Používateľ si tak môže vypýtať telefónne číslo, ktoré je na rade na zatelefonovanie. Následne používateľ môže odkliknúť, že na číslo zatelefonoval a zobrazí sa mu ďalšie telefónne číslo v poradí.
 
-Aplikácia má iba terminálový používateľské rozhranie, komunikuje s používateľom cez štandartný vstup a výstup.
+Aplikácia má iba terminálové používateľské rozhranie, komunikuje s používateľom cez štandardný vstup a výstup.
 
 ## Funkcionalita
 
@@ -74,7 +76,7 @@ Nemusíte validovať, či telefónne číslo má správny tvar. Prázdny `string
 Ak si používateľ zvolí možnosť vyhľadania telefónneho čísla, program od používateľa vypýta vstup typu `string` pre zadanie **priezviska**.
 Ak sa zadané priezvisko v štruktúre nenachádza vypíše program chybovú správu používateľovi.
 
-V prípade nájdenia priezviska v štrutkúre telefónneho zoznamu, program vypíše zoznam krstných mien, pre dané priezvisko.
+V prípade nájdenia priezviska v štruktúre telefónneho zoznamu, program vypíše zoznam krstných mien, pre dané priezvisko.
 Používateľ si následne môže zvoliť niektoré z vypísaných krstných mien. Po výbere sa vypíše používateľovi celý záznam zoznamu v tvare:
 
 ```txt
@@ -137,7 +139,7 @@ Zadanie je **ohodnotené 20 bodmi**. Odovzdanný program musí byť skompilovate
 
 ## Odovzdanie
 
-Po prihlasení sa na zadanie cez [GitHub Classroom](https://classroom.github.com/a/9fAWfj4r) vám je automaticky vytvorená kópia repozitára, ktorý bude nastavený ako privátny pre vás na vypracovanie (t.j. máte povolený commit a push do repozitára). Skontrolujte si, či sa váš repozitár nachádza pod skupinou _Interes-Group_, inak vyučujúci nemajú prístup ku vášmu repozitáru a zadanie sa nepovažuje za odovzdané. Ak sa vám repozitár nevytvorí ihneď kontajktuje vyučujúceho na MS Teams alebo na univerzitnom emaily. Je prísne zakázané dávať prístup k vášmu repozitáru inému štundetovi, alebo osobe, ktorá nie je vyučujúci.
+Po prihlásení sa na zadanie cez [GitHub Classroom](https://classroom.github.com/) vám je automaticky vytvorená kópia repozitára, ktorý bude nastavený ako privátny pre vás na vypracovanie (t.j. máte povolený commit a push do repozitára). Skontrolujte si, či sa váš repozitár nachádza pod skupinou _Interes-Group_, inak vyučujúci nemajú prístup ku vášmu repozitáru a zadanie sa nepovažuje za odovzdané. Ak sa vám repozitár nevytvorí ihneď kontajktuje vyučujúceho na MS Teams alebo na univerzitnom emaily. Je prísne zakázané dávať prístup k vášmu repozitáru inému študentovi, alebo osobe, ktorá nie je vyučujúci.
 
 V repozitáry upravujte iba súbory pod priečinkom `src`. Ostatné súbory je zakázané upravovať, predovšetkým súbory pre kompiláciu, súbory obsahujúce github pipeline-y (_.github_) a súbory obsahujúce automatizované testy. Pri zmene týchto súborov môže byť vypracovanie ohodnotené 0 bodmi.
 
@@ -148,11 +150,11 @@ V prípade otázok, alebo technických problémov môžete kontaktovať vyučuj�
 
 ## Bonus - Detekcia mŕtveho čísla (2b)
 
-Rozšírte hodnotu, ktorá je indexovaná v prefixovom strome. Okrem telefónného čísla pre danú osobu ukladajte aj pre dané telefoné číslo počet koľko krát osoba na telefonnom čísle zodvihla pri pokuse o telefonát a počet, koľko krát osoba telefónne číslo nezdvihla. Tieto počty pridajte aj do výpisu záznamu pre funkcionality vyhľadania telefónneho čísla.
+Rozšírte hodnotu, ktorá je indexovaná v prefixovom strome. Okrem telefónneho čísla pre danú osobu ukladajte aj pre dané telefónne číslo počet koľko krát osoba na telefonnom čísle zodvihla pri pokuse o telefonát a počet, koľko krát osoba telefónne číslo nezdvihla. Tieto počty pridajte aj do výpisu záznamu pre funkcionality vyhľadania telefónneho čísla.
 
 Rozšírte možnosti telefonickej fronty tak, aby keď používateľ zvolí možnosť _"Začni telefonickú frontu"_ a program vypíše záznam s telefónnym číslom, ktoré je na rade pre telefonát, tak namiesto potvrdenia, či používateľ zavolal na dané telefónne číslo, sa mu zobrazia dve voľby:
 
-- **Osoba zodvihla hovor** na uvedenom telefónom čísle - Program tak zvýši počet zodvihnutí pre dané telefónne číslo v telefonom zozname o jeden.
-- **Osoba nezodvihla hovor** na uvedenom telefónom čísle - Program zvýši počet nezodvihnutí pre dané telefónne číslo v telefonnom zozname o jeden. Ak tento počet dosiahne hodnotu 3, záznam s daným telefónnym číslom je vymazaný z telefónneho zoznamu. O tejto skutočnosti vymazania záznamu je upozornení používateľ.
+- **Osoba zodvihla hovor** na uvedenom telefónom čísle - Program tak zvýši počet zdvihnutí pre dané telefónne číslo v telefónnom zozname o jeden.
+- **Osoba nezodvihla hovor** na uvedenom telefónom čísle - Program zvýši počet nezdvihnutí pre dané telefónne číslo v telefónnom zozname o jeden. Ak tento počet dosiahne hodnotu 3, záznam s daným telefónnym číslom je vymazaný z telefónneho zoznamu. O tejto skutočnosti vymazania záznamu je upozornení používateľ.
 
 Po zvolení jednej s vyššie uvedených možností program pokračuje na ďalšie číslo vo fronte ako bolo uvedené v pôvodnej funkcionalite.
