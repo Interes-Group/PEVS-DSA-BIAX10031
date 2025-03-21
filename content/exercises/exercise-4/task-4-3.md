@@ -138,7 +138,7 @@ int main() {
 }
 ```
 
-## Vysvetlenie
+### Vysvetlenie
 - Každý `Vertex` obsahuje mapu svojich susedov (`unordered_map<string, pair<Vertex*, int>>`), kde:
   - `string` je `label` suseda,
   - `Vertex*` je pointer na suseda,
@@ -146,7 +146,7 @@ int main() {
 - Metóda `add_vertex()` zabezpečuje pridanie **obojstrannej hrany** (graf je neorientovaný).
 - Metóda `count()` počíta cenu cesty cez daný zoznam názvov uzlov – ak niektorá hrana chýba, vráti `-1`.
 
-## Ukážkový výstup
+### Ukážkový výstup
 
 ```
 Cost A->C->D: 7
@@ -154,7 +154,7 @@ Cost A->B->C->D: 11
 Cost A->D: -1
 ```
 
-## ASCII vizualizácia
+### ASCII vizualizácia
 
 ```text
      [A]

@@ -191,7 +191,7 @@ int main() {
 
 ## Očakávaný výstup
 
-```cpp
+```text
 Insert 'Milan': true
 Insert 'Martin': true
 Insert 'Martina': true

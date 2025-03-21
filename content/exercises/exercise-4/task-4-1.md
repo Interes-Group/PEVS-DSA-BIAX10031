@@ -137,32 +137,32 @@ int main() {
 }
 ```
 
-## Vysvetlenie kódu
+### Vysvetlenie kódu
 
-### 1. Trieda `Node`
+#### 1. Trieda `Node`
 Predstavuje jeden uzol stromu. Obsahuje:
 - `label` – názov/označenie uzla (napr. `"A"`, `"B"`, atď.)
 - `children` – zoznam (vektor) ukazovateľov na detské uzly
 
-#### Dôležité metódy:
+##### Dôležité metódy:
 - **`get_label()`** a **`set_label()`** – prístup k názvu uzla
 - **`get_children()`** – prístup k zoznamu detí
 - **`add_child(Node*)`** – pridanie dieťaťa, len ak ešte neexistuje (podľa pointera alebo mena)
 
-### 2. Funkcia `traverse(Node*)`
+#### 2. Funkcia `traverse(Node*)`
 Implementuje **pre-order** (do hĺbky) prechod stromom:
 - Najprv navštívi aktuálny uzol
 - Potom rekurzívne prechádza všetky deti uzla
 - Výsledok je jeden reťazec s názvami uzlov oddelenými čiarkou
 
-### 3. Funkcia `main()`
+#### 3. Funkcia `main()`
 - Vytvorí uzly stromu
 - Poskladá strom pomocou `add_child()`
 - Zavolá `traverse()` na koreň
 - Vypíše výsledok na štandardný výstup
 - Uvoľní alokovanú pamäť (`delete`)
 
-## Vizualizácia stromu
+### Vizualizácia stromu
 
 Strom vyzerá takto (každý uzol je označený písmenom):
 
@@ -180,9 +180,7 @@ Strom vyzerá takto (každý uzol je označený písmenom):
 - `D` má 1 dieťa: `G`
 - `C`, `E`, `F`, `G` sú listy (nemajú deti)
 
----
-
-## Výstup funkcie `traverse(root)`
+### Výstup funkcie `traverse(root)`
 Prechod do hĺbky (pre-order) navštívi uzly v tomto poradí:
 ```
 A → B → E → F → C → D → G
