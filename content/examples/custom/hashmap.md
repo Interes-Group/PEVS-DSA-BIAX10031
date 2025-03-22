@@ -181,7 +181,7 @@ public:
      */
     int contains(int hodnota) {
         const int hash = calc_hash(hodnota);
-        if (!buckets[hash]) return false;
+        if (!buckets[hash]) return -1;
         PrvokZoznamu *najdeny = buckets[hash]->find(hodnota);
         return najdeny != nullptr ? hash : -1;
     }
