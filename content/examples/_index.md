@@ -36,3 +36,11 @@ cascade:
 {{< cards cols="2" >}}
 {{< card link="./trees/binary-tree" title="Binárny strom" subtitle="Jednoduchý program pre prácu s binárnym stromom" icon="" >}}
 {{< /cards >}}
+
+## 🔄 Sorting / Triedenie
+
+{{< cards cols="2" >}}
+{{< card link="./sort/bubble" title="Bubble Sort" subtitle="" icon="" >}}
+{{< card link="./sort/merge" title="Merge Sort" subtitle="" icon="" >}}
+{{< card link="./sort/quick" title="Quicksort" subtitle="" icon="" >}}
+{{< /cards >}}
