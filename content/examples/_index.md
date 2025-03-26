@@ -40,7 +40,7 @@ cascade:
 ## 🔄 Sorting / Triedenie
 
 {{< cards cols="2" >}}
-{{< card link="./sort/bubble" title="Bubble Sort" subtitle="" icon="" >}}
-{{< card link="./sort/merge" title="Merge Sort" subtitle="" icon="" >}}
-{{< card link="./sort/quick" title="Quicksort" subtitle="" icon="" >}}
+{{< card link="./sort/bubble" title="Bubble Sort" subtitle="" icon="support" >}}
+{{< card link="./sort/merge" title="Merge Sort" subtitle="" icon="save-as" >}}
+{{< card link="./sort/quick" title="Quicksort" subtitle="" icon="lightning-bolt" >}}
 {{< /cards >}}
