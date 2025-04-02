@@ -34,3 +34,13 @@ title: 'Prednášky'
 {{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/EfEnWjd94HZPmK4YFDqAxGYB-KnKHTyvJgOp_ekMZO0Vxg?e=fSFcte" title="Záznam z prednášky 3 - časť 1" subtitle="MS Teams odkaz" image="" >}}
 {{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/ET6gwTZbaHBKufD6Rs8aTCABcEn--J2_OSOcbZZVWcjl5g?e=sCnWVZ" title="Záznam z prednášky 3 - časť 2" subtitle="MS Teams odkaz" image="" >}}    
 {{< /cards >}}
+
+## Prednáška 4 - 28.03.2025
+
+{{< youtube "NQlAl--dOy0" >}}
+
+{{< cards cols="2" >}}
+{{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/Ea5Bu624Ht5OtJypwPbythMBs66Sh6ymkzS7TSs52SHb9w?e=HU3WEj" title="Záznam z prednášky 4 - časť 1" subtitle="MS Teams odkaz" image="" >}}
+{{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/EZOuy3rexj5NkfDVYFt3BAMBCHWMnIaVj5NhoupwG90yvw?e=o9eN7F" title="Záznam z prednášky 4 - časť 2" subtitle="MS Teams odkaz" image="" >}}
+{{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/ES7MO2xmlthKsdZ6xhl1MRMBJtY1m1nnVWRdmBk9jM6yEg?e=bHV4BC" title="Záznam z prednášky 4 - časť 3" subtitle="MS Teams odkaz" image="" >}} 
+{{< /cards >}}
