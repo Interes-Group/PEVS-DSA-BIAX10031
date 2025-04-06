@@ -57,7 +57,7 @@ public:
         Node::parent = parentNode;
     }
 
-    string &traverse() {
+    string traverse() {
         string output = "";
         output.append(Node::label + ",");
         return traverse_node(this, &output);
