@@ -32,7 +32,6 @@ jazyka C++.
 > Nezabudnite každú alokovanú pamäť uvoľniť volaním operátorom `delete <premenná>`! Je dôležité si po sebe vždy
 > upratať.
 
-Riešenia na jednotlivé úlohy budú uverejnené neskôr.
 
 ## Úlohy
 

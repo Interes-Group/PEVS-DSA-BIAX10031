@@ -31,6 +31,14 @@ cascade:
 {{< card link="./custom/stack" title="Stack" subtitle="Jednoduchá implementácia zásobníka reťazcov" icon="" >}}
 {{< /cards >}}
 
+## 🔄 Sorting / Triedenie
+
+{{< cards cols="2" >}}
+{{< card link="./sort/bubble" title="Bubble Sort" subtitle="" icon="support" >}}
+{{< card link="./sort/merge" title="Merge Sort" subtitle="" icon="save-as" >}}
+{{< card link="./sort/quick" title="Quicksort" subtitle="" icon="lightning-bolt" >}}
+{{< /cards >}}
+
 ## 🌳 Stromy
 
 {{< cards cols="2" >}}
@@ -40,10 +48,10 @@ cascade:
 {{< card link="./trees/avl_tree" title="Binárny strom" subtitle="Jednoduchá implementácia AVL stromu (auto-balansovaného BST)" icon="" >}}
 {{< /cards >}}
 
-## 🔄 Sorting / Triedenie
+## ⛓ Grafy
 
 {{< cards cols="2" >}}
-{{< card link="./sort/bubble" title="Bubble Sort" subtitle="" icon="support" >}}
-{{< card link="./sort/merge" title="Merge Sort" subtitle="" icon="save-as" >}}
-{{< card link="./sort/quick" title="Quicksort" subtitle="" icon="lightning-bolt" >}}
+{{< card link="./graphs/graph_as_matrix" title="Graf vyjadrený maticou" subtitle="Jednoduchá implementácia grafu pomocou matice" icon="" >}}
+{{< card link="./graphs/graph_depth_traversal" title="Prehľadávanie do hĺbky grafu" subtitle="Jednoduchá implementácia prechádzania všetkých vrcholov grafu do hĺbky" icon="" >}}
+{{< card link="./graphs/graph_dijkstra" title="Dijkstra algoritmus" subtitle="Implementácia nájdenia najkratšej cesty medzi vrcholmi pomocou Dijkstra algoritmu" icon="" >}}
 {{< /cards >}}
