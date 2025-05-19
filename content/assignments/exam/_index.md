@@ -10,9 +10,9 @@ prostredníctvom lexikografického stromu** (Trie), v ktorom budú anglické slo
 
 Vrcholy lexikografického stromu budú mať:
 
-- Pole 26 smerníkov (pointerov) na nasledovné vrcholy lexikografického stromu reprezentujúce jednotlivé písmená.
-- Atribút premennú `jeSlovo` (typu `int`), ktorá určuje, či vrchol predstavuje koniec slova.
-- Atribút premennú `preklad` (typu buď `string` alebo `vector` alebo pole znakov, t.j. `string[]`), ktorá bude uchovávať
+- Atribút pole 26 smerníkov (pointerov) na nasledovné vrcholy lexikografického stromu reprezentujúce jednotlivé písmená.
+- Atribút `jeSlovo` (typu `int`), ktorá určuje, či vrchol predstavuje koniec slova.
+- Atribút `preklad` (typu buď `string` alebo `vector` alebo pole znakov, t.j. `char[]`), ktorá bude uchovávať
   slovenský preklad daného slova v prípade, ak daný vrchol predstavuje koniec anglického slova.
 
 Po spustení programu vykoná program v cykle:
