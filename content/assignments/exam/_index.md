@@ -1,9 +1,9 @@
 ---
 date: '2025-05-19T16:37:14+02:00'
-title: 'Zadanie Skúšky'
+title: 'Skúškové Zadanie'
 ---
 
-# Skúškové zadanie - prekladový strom
+# Anglicko-slovenský prekladový strom
 
 Napíšte program v jazyku C alebo C++, ktorý bude **implementovať funkcionalitu anglicko-slovenského slovníka
 prostredníctvom lexikografického stromu** (Trie), v ktorom budú anglické slová (písané malými písmenami od 'a' po 'z').
