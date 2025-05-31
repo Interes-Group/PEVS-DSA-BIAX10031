@@ -44,3 +44,12 @@ title: 'Prednášky'
 {{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/EZOuy3rexj5NkfDVYFt3BAMBCHWMnIaVj5NhoupwG90yvw?e=o9eN7F" title="Záznam z prednášky 4 - časť 2" subtitle="MS Teams odkaz" image="" >}}
 {{< card link="https://pevs.sharepoint.com/:v:/s/2425LSBIAX10031Dtovtruktryaalgoritmy/ES7MO2xmlthKsdZ6xhl1MRMBJtY1m1nnVWRdmBk9jM6yEg?e=bHV4BC" title="Záznam z prednášky 4 - časť 3" subtitle="MS Teams odkaz" image="" >}} 
 {{< /cards >}}
+
+## Prednáška 5 - 02.05.2025
+
+{{< youtube "FzYnUE5Z98M" >}}
+
+{{< cards cols="2" >}}
+{{< card link="https://pevs.sharepoint.com/sites/2425LSBIAX10031Dtovtruktryaalgoritmy/Zdielane%20dokumenty/General/Recordings/Meeting%20in%20_General_-20250502_151848-Meeting%20Recording.mp4?web=1&referrer=Teams.TEAMS-WEB&referrerScenario=MeetingChicletGetLink.view" title="Záznam z prednášky 5 - časť 1" subtitle="MS Teams odkaz" image="" >}}
+{{< card link="https://pevs.sharepoint.com/sites/2425LSBIAX10031Dtovtruktryaalgoritmy/Zdielane%20dokumenty/General/Recordings/Meeting%20in%20_General_-20250502_165514-Meeting%20Recording.mp4?web=1&referrer=Teams.TEAMS-WEB&referrerScenario=MeetingChicletGetLink.view" title="Záznam z prednášky 5 - časť 2" subtitle="MS Teams odkaz" image="" >}}
+{{< /cards >}}
