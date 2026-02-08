@@ -38,7 +38,6 @@ Na tejto stránke nájdete všetky materiály, ktoré sú potrebné pre štúdiu
 - **60 bodov skúška** - praktická, zadanie na programovanie
 - **Pre** úspešné **absolvovanie** predmetu je potrebné:
   - **odovzdať obe zadania**
-  - **získať 20 bodov zo zadaní počas semestra**
 - Výsledná známka bude určená na základe platnej klasifikačnej stupnice PEVŠ
 
 ## Sylabus predmetu
