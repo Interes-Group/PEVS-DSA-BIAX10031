@@ -32,7 +32,7 @@ Na tejto stránke nájdete všetky materiály, ktoré sú potrebné pre štúdiu
 
 - **40 bodov počas semestra**
   - 2 zadania na vypracovanie po 20 bodov
-  - na vypracovanie bude 7 dní (s možnosťou predĺženia)
+  - na vypracovanie bude 10 dní (s možnosťou predĺženia)
   - 1. zadanie na cvičení v 5. týždni semestra, 
   - 2. zadanie na cvičení v 10. týždni semestra
 - **60 bodov skúška** - praktická, zadanie na programovanie

@@ -25,7 +25,11 @@ palindróm, inak vráti `false`. V programe použite vhodné konštanty tam, kde
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
+Musím si počkať kým sa tu objaví príklad riešenia.
 
+Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+
+<!--
 ```cpp
 #include <iostream>
 
@@ -76,9 +80,9 @@ int main() {
 - Načítanie reťazca: Používa sa funkcia `std::cin.getline` na načítanie celého riadku textu vrátane medzier.
 - Volanie funkcie `je_palindrom`: Na základe návratovej hodnoty tejto funkcie program vypíše, či je zadaný reťazec
   palindróm alebo nie.
-
+-->
 {{< /details >}}
-
+<!--
 {{< details title="Alternatívne, viac c++ riešenie" closed="true" >}}
 
 ```cpp
@@ -127,3 +131,4 @@ program ignoroval veľkosť písmen a nealfanumerické znaky, môžete pred poro
 písmená a odstrániť nealfanumerické znaky.
 
 {{< /details >}}
+-->

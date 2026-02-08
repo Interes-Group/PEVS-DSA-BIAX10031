@@ -5,4 +5,5 @@ title: 'Rôzne'
 
 {{< cards cols="2" >}}
     {{< card link="./git-for-beginners" title="Git pre začiatočníkov" subtitle="Krátky úvod do sveta verziovania kódu nástrojom Git" icon="code" >}}
+    {{< card link="./cpp-templates" title="C++ šablóny" subtitle="Stručný úvod do C++ template funkcií" icon="code" >}}
 {{< /cards >}}

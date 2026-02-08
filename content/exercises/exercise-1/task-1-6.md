@@ -29,7 +29,11 @@ Najdlhšia neklesajúca postupnosť má dĺžku: 4
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
+Musím si počkať kým sa tu objaví príklad riešenia.
 
+Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+
+<!--
 ```cpp
 #include <iostream>
 
@@ -90,5 +94,5 @@ int main() {
       na konci poľa.
 5. Výpis výsledku: Program vypíše dĺžku najdlhšej neklesajúcej postupnosti.
 6. Uvoľnenie pamäte: Na záver program uvoľní dynamicky alokovanú pamäť pomocou operátora `delete[]`.
-
+-->
 {{< /details >}}
