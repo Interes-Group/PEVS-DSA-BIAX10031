@@ -33,6 +33,11 @@ vo funkcii `main` aspoň tri objekty a zavolajte ich metódy.
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
+Musím si počkať kým sa tu objaví príklad riešenia.
+
+Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+
+<!--
 ```cpp
 #include <iostream>
 #include <vector>
@@ -135,5 +140,5 @@ Ročník: 1
 Priemerná známka: 4.75
 ----------------------
 ```
-
+-->
 {{< /details >}}

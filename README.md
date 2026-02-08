@@ -5,7 +5,7 @@
 [![Deploy site to GitHub Pages](https://github.com/Interes-Group/PEVS-DSA-BIAX10031/actions/workflows/gh-pages.yaml/badge.svg)](https://github.com/Interes-Group/PEVS-DSA-BIAX10031/actions/workflows/gh-pages.yaml)
 
 This repository hosts the website for the university course **"Dátové štruktúry a algoritmy"** (Data Structures and
-Algorithms) for the 2024/2025 summer semester. Built with [Hugo](https://gohugo.io/)
+Algorithms) for summer semester. Built with [Hugo](https://gohugo.io/)
 and [Hextra theme](https://github.com/imfing/hextra), this site provides course
 materials, announcements, and additional resources to support both students and instructors.
 

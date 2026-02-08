@@ -36,6 +36,13 @@ Viac o Merge sort algoritme sa viete dozvedieť napríklad na stránkach:
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
+Musím si počkať kým sa tu objaví príklad riešenia.
+
+Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+
+<!--
+
+
 ```cpp
 #include <iostream>
 #include <list>
@@ -149,5 +156,7 @@ int main() {
 3. **In-place triedenie**
     - Všetky operácie nad zoznamom prebiehajú pomocou `splice`, takže sa nealokuje nová pamäť na uzly, iba sa mení ich
       prepojenie, čo zabezpečuje efektívny merge sort pre `std::list`.
+
+-->
 
 {{< /details >}}

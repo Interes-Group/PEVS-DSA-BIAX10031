@@ -39,6 +39,13 @@ count({3,1,2,5,1}) == 18;
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
+Musím si počkať kým sa tu objaví príklad riešenia.
+
+Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+
+<!--
+
+
 Ováhovaný neorientovaný graf implementovaný pomocou triedy `Vertex`. Každý vrchol uchováva informácie o svojich susedoch a váhach hrán.
 
 ```cpp
@@ -163,5 +170,7 @@ Cost A->D: -1
    /     \
  [B]--2--[C]--4--[D]
 ```
+
+-->
 
 {{< /details >}}

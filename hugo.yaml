@@ -13,23 +13,27 @@ menu:
     - name: Cvičenia
       pageRef: /exercises
       weight: 2
-    - name: Príklady
-      pageRef: /examples
-      weight: 3
     - name: Zadania
       pageRef: /assignments
+      weight: 3
+    - name: Príklady
+      pageRef: /examples
       weight: 4
-    - name: Vyhľadávanie
+    - name: Extra Materiály
+      pageRef: /other
       weight: 5
+
+    - name: Vyhľadávanie
+      weight: 6
       params:
         type: search
     - name: GitHub
-      weight: 6
+      weight: 7
       url: "https://github.com/Interes-Group/PEVS-DSA-BIAX10031"
       params:
         icon: github
     - name: Youtube
-      weight: 7
+      weight: 8
       url: "https://www.youtube.com/channel/UCRGOmuTb6Bdsmneu6cTNNgg"
       params:
         icon: youtube

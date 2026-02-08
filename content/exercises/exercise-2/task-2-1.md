@@ -29,7 +29,11 @@ nich metódu `vypis_info()`.
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
+Musím si počkať kým sa tu objaví príklad riešenia.
 
+Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
+
+<!--
 ```cpp
 #include <iostream>
 #include <string>
@@ -102,5 +106,5 @@ Autor: George Orwell
 ISBN: 978-80-7106-371-9
 ------------------
 ```
-
+-->
 {{< /details >}}
