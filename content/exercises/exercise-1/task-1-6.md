@@ -29,11 +29,7 @@ Najdlhšia neklesajúca postupnosť má dĺžku: 4
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
-Musím si počkať kým sa tu objaví príklad riešenia.
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 
@@ -80,7 +76,8 @@ int main() {
 
 ### Vysvetlenie
 
-1. Načítanie počtu prvkov: Program načíta celé číslo `n`, ktoré určuje počet prvkov v poli. Ak je `n` neplatné (napríklad
+1. Načítanie počtu prvkov: Program načíta celé číslo `n`, ktoré určuje počet prvkov v poli. Ak je `n` neplatné (
+   napríklad
    záporné alebo nulové), program vypíše chybové hlásenie a ukončí sa.
 2. Dynamická alokácia poľa: Pomocou operátora `new` program alokuje pole veľkosti `n` pre celé čísla.
 3. Načítanie prvkov: V cykle `for` program načíta `n` celých čísel od používateľa a uloží ich do poľa.
@@ -88,11 +85,13 @@ int main() {
     - Program inicializuje premenné `max_dlzka` a `aktualna_dlzka` na 1.
     - V cykle prechádza pole od druhého prvku po posledný.
     - Ak je aktuálny prvok väčší alebo rovný predchádzajúcemu, zvýši `aktualna_dlzka` o 1.
-    - Ak nie, porovná `aktualna_dlzka` s `max_dlzka`. Ak je `aktualna_dlzka` väčšia, aktualizuje `max_dlzka`. Potom resetuje
+    - Ak nie, porovná `aktualna_dlzka` s `max_dlzka`. Ak je `aktualna_dlzka` väčšia, aktualizuje `max_dlzka`. Potom
+      resetuje
       `aktualna_dlzka` na 1.
-    - Po ukončení cyklu ešte raz porovná `aktualna_dlzka` s `max_dlzka` pre prípad, že najdlhšia neklesajúca postupnosť bola
+    - Po ukončení cyklu ešte raz porovná `aktualna_dlzka` s `max_dlzka` pre prípad, že najdlhšia neklesajúca postupnosť
+      bola
       na konci poľa.
 5. Výpis výsledku: Program vypíše dĺžku najdlhšej neklesajúcej postupnosti.
 6. Uvoľnenie pamäte: Na záver program uvoľní dynamicky alokovanú pamäť pomocou operátora `delete[]`.
--->
+
 {{< /details >}}

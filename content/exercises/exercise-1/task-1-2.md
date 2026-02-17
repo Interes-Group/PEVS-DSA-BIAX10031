@@ -27,11 +27,7 @@ načíta `n` celých čísel a následne vypíše všetky párne čísla v porad
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
-Musím si počkať kým sa tu objaví príklad riešenia.
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 
@@ -71,5 +67,5 @@ int main() {
 3. Načítanie prvkov: V cykle `for` program načíta `n` celých čísel od používateľa a uloží ich do poľa.
 4. Výpis párnych čísel: Program prechádza pole a pomocou operátora modulo (`%`) kontroluje, či je dané číslo párne. Ak áno, vypíše ho na štandardný výstup.
 5. Uvoľnenie pamäte: Na záver program uvoľní dynamicky alokovanú pamäť pomocou operátora `delete[]`.
--->
+
 {{< /details >}}

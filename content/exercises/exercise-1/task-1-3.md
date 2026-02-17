@@ -33,11 +33,7 @@ transponovanú maticu na štandardný výstup.
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
-Musím si počkať kým sa tu objaví príklad riešenia.
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 
@@ -97,5 +93,5 @@ int main() {
 4. Transponovanie matice: Program prechádza hornú trojuholníkovú časť matice (nad hlavnou diagonálou) a pre každý prvok `matica[i][j]` vymení jeho hodnotu s prvkom `matica[j][i]`. Tým sa dosiahne transpozícia matice.
 5. Výpis transponovanej matice: Program vypíše transponovanú maticu na štandardný výstup.
 6. Uvoľnenie dynamicky alokovanej pamäte: Program uvoľní pamäť alokovanú pre každý riadok matice pomocou `delete[]` a následne uvoľní aj pole ukazovateľov.
--->
+
 {{< /details >}}

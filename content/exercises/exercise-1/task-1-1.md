@@ -29,11 +29,6 @@ Priemer: 25.83
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 
@@ -77,6 +72,6 @@ int main() {
 5. Priemer sa vypočíta celočíselným delením súčtu počtom čísel (`sucet / n`), čo automaticky zaokrúhli výsledok nadol na najbližšie celé číslo.
 6. Program vypíše súčet a priemer.
 7. Na záver uvoľní dynamicky alokovanú pamäť pomocou `delete[]`.
--->
+
 {{< /details >}}
 

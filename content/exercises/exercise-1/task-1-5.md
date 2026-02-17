@@ -26,11 +26,7 @@ anagramy, inak vráti `false`. V programe použite vhodné konštanty tam, kde j
 ---
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
-Musím si počkať kým sa tu objaví príklad riešenia.
 
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 #include <string>
@@ -84,5 +80,5 @@ int main() {
 
 - Načíta dva reťazce od používateľa pomocou `std::getline`, čo umožňuje načítať celé riadky vrátane medzier.
 - Volá funkciu `su_anagramy` a na základe jej návratovej hodnoty vypíše, či sú zadané reťazce anagramy alebo nie.
--->
+
 {{< /details >}}
