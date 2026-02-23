@@ -27,11 +27,6 @@ zavolajte ich metódy.
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 #include <string>
@@ -148,5 +143,5 @@ Z účtu SK1000000003 bolo vybrané: 50 EUR.
 Zostatok: 500 EUR
 ----------------------
 ```
--->
+
 {{< /details >}}

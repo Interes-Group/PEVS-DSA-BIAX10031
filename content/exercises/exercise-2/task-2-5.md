@@ -52,11 +52,6 @@ demonštráciu implementácie vytvorte vo funkcii `main` aspoň tri objekty a za
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
 ```cpp
 #include <iostream>
 #include <vector>
@@ -256,5 +251,5 @@ Zoznam študentov:
   - Programovanie (PROG202)
 ...
 ```
--->
+
 {{< /details >}}
