@@ -11,7 +11,6 @@ Umožňuje:
 - zistiť, či sa prvok nachádza v množine,
 - zistiť počet prvkov,
 - a vypísať vnútorné rozloženie prvkov do bucket-ov.
--
 
 Používa sa tu princíp **hašovania**: číslo sa pomocou hašovacej funkcie priradí do konkrétneho „koša“ (bucket).
 Ak do rovnakého koša spadne viac hodnôt, ukladajú sa do poľa v danom koši. Toto sa volá **riešenie kolízií pomocou
