@@ -4,7 +4,8 @@ title: 'Vlastné kontajnery'
 ---
 
 {{< cards cols="2" >}}
-{{< card link="./hashmap" title="HashMap" subtitle="Implementácia hash mapy s číslami" icon="" >}}
+{{< card link="./hashset" title="HashSet" subtitle="Implementácia hash setu s číslami" icon="" >}}
+{{< card link="./hashmap" title="HashMap" subtitle="Implementácia hash mapy s reťazcami" icon="" >}}
 {{< card link="./queue" title="Fronta" subtitle="Jednoduchá implementácia fronty reťazcov" icon="" >}}
 {{< card link="./stack" title="Stack" subtitle="Jednoduchá implementácia zásobníka reťazcov" icon="" >}}
 {{< /cards >}}

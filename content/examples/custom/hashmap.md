@@ -3,11 +3,10 @@ date: '2025-03-21T23:13:41+01:00'
 title: 'HashMap'
 ---
 
-Príklad implementácie štruktúry **hash** mapy. Táto implementácia ukladá len hodnoty typu `int`.
-Jednotlivé hodnoty sú uložené do "vedier" (z angl. bucket), alebo chlievikov, pre hodnoty, ktorým je vypočítaný rovnaký
-**hash**.
-Prístup cez vypočítaný hash zrýchli prístup na _O(1)+O(n)_ kde _n_ je dĺžka najväčšieho bucketu. Čo je lepšie ako
-klasický zoznam.
+Tento program demonštruje jednoduchú vlastnú implementáciu hash mapy v C++. Dátovej štruktúry, ktorá ukladá
+dvojice kľúč → hodnota a umožňuje rýchle operácie ako vloženie, vyhľadanie, aktualizáciu a odstránenie.
+
+Účelom je demonštrovať, ako funguje hashovanie a riešenie kolízií pomocou „bucketov“.
 
 ```cpp
 #include <iostream>
@@ -15,294 +14,749 @@ klasický zoznam.
 
 using namespace std;
 
-class PrvokZoznamu {
+class MapEntry {
 public:
-    int hodnota;
-    PrvokZoznamu *dalsi = nullptr;
-    PrvokZoznamu *predchadzajuci = nullptr;
+    string key;
+    string value;
 
-    /**
-     * @brief Konštruktor pre vytvorenie nového prvku so zadanou hodnotou.
-     * @param hodnota Hodnota, ktorú prvok bude obsahovať.
-     */
-    explicit PrvokZoznamu(int hodnota) : hodnota(hodnota) {
-    }
-
-    /**
-     * @brief Vytlačí hodnoty všetkých prvkov v zozname, počnúc týmto prvkom.
-     */
-    void print() {
-        cout << hodnota << ", ";
-        if (dalsi) {
-            dalsi->print();
-        }
-    }
-
-    /**
-     * @brief Vyhľadá prvok so zadanou hodnotou v zozname.
-     * @param najdi Hľadaná hodnota.
-     * @return Ukazateľ na prvý nájdený prvok alebo nullptr, ak sa nenájde.
-     */
-    PrvokZoznamu *find(int najdi) {
-        if (hodnota == najdi) return this;
-        if (dalsi) return dalsi->find(najdi);
-        return nullptr;
-    }
-
-    /**
-     * @brief Získa posledný prvok v zozname.
-     * @return Ukazateľ na posledný prvok.
-     */
-    PrvokZoznamu *last() {
-        if (!dalsi) return this;
-        else return dalsi->last();
-    }
-
-    /**
-     * @brief Získa prvý prvok v zozname.
-     * @return Ukazateľ na prvý prvok.
-     */
-    PrvokZoznamu *first() {
-        if (!predchadzajuci) return this;
-        else return predchadzajuci->first();
-    }
-
-    /**
-     * @brief Vloží nový prvok so zadanou hodnotou na koniec zoznamu, ak už neexistuje.
-     * @param nova_hodnota Hodnota nového prvku.
-     * @return Ukazateľ na novo vložený prvok alebo nullptr, ak už existuje.
-     */
-    PrvokZoznamu *insert(int nova_hodnota) {
-        PrvokZoznamu *obsahuje_hodnotu = find(nova_hodnota);
-        if (obsahuje_hodnotu) return nullptr;
-        PrvokZoznamu *posledny = last();
-        PrvokZoznamu *vkladany = new PrvokZoznamu(nova_hodnota);
-        posledny->dalsi = vkladany;
-        vkladany->predchadzajuci = posledny;
-        return vkladany;
-    }
-
-    /**
-     * @brief Odstráni prvok so zadanou hodnotou zo zoznamu.
-     * @param na_vymazanie Hodnota prvku, ktorý sa má odstrániť.
-     * @return Ukazateľ na nový začiatok zoznamu po odstránení.
-     */
-    PrvokZoznamu *remove(int na_vymazanie) {
-        if (na_vymazanie == hodnota) {
-            if (predchadzajuci) {
-                predchadzajuci->dalsi = this->dalsi;
-            }
-            if (dalsi) {
-                dalsi->predchadzajuci = predchadzajuci;
-            }
-            PrvokZoznamu *prvy = first();
-            if (prvy == this) {
-                prvy = prvy->dalsi;
-                delete this;
-            }
-            return prvy;
-        }
-        if (dalsi) dalsi->remove(na_vymazanie);
-    }
-
-    /**
-     * @brief Vymaže celý zoznam, počnúc posledným prvkom a idúc späť k prvému.
-     */
-    void clear() {
-        PrvokZoznamu *posledny = last();
-        while (posledny) {
-            if (!posledny->predchadzajuci) {
-                delete posledny;
-                break;
-            }
-            posledny = posledny->predchadzajuci;
-            delete posledny->dalsi;
-        }
+    MapEntry(string key, string value) {
+        this->key = key;
+        this->value = value;
     }
 };
 
 class HashMap {
+private:
+    vector<vector<MapEntry>> buckets;
+    int capacity;
+    int elementCount;
+
+    int hash(const string &key) const {
+        int sum = 0;
+        for (char c: key) {
+            sum = sum + c;
+        }
+        return sum % capacity;
+    }
+
 public:
-    vector<PrvokZoznamu *> buckets;
-    int kapacita;
+    HashMap(int capacity = 10) {
+        this->capacity = capacity;
+        elementCount = 0;
+        buckets.resize(capacity);
+    }
 
-    /**
-     * @brief Konštruktor pre vytvorenie hash mapy so zadanou kapacitou.
-     * @param kapacita Počet "vedier" hash mapy.
-     */
-    explicit HashMap(int kapacita) : kapacita(kapacita) {
-        for (int i = 0; i < kapacita; i++) {
-            buckets.push_back(nullptr);
+    // insert
+    void put(const string &key, const string &value) {
+        int h = hash(key);
+        for (MapEntry &entry: buckets[h]) {
+            if (entry.key == key) {
+                entry.value = value;
+                return;
+            }
+        }
+        buckets[h].push_back(MapEntry(key, value));
+        elementCount++;
+    }
+
+    // remove
+    void remove(const string &key) {
+        int h = hash(key);
+        for (int i = 0; i < buckets[h].size(); i++) {
+            if (buckets[h][i].key == key) {
+                buckets[h][i] = buckets[h][buckets[h].size() - 1]; // buckets[h].back()
+                buckets[h].pop_back();
+                elementCount--;
+                return;
+            }
         }
     }
 
-    /**
-     * @brief Vypočíta hash pre danú hodnotu.
-     * @param hodnota Hodnota, pre ktorú sa má vypočítať hash.
-     * @return Výsledný hash ako index do poľa.
-     */
-    int calc_hash(int hodnota) const {
-        return hodnota % kapacita;
+    // contains key
+    bool containsKey(const string &key) {
+        int h = hash(key);
+        for (MapEntry &entry: buckets[h]) {
+            if (entry.key == key) return true;
+        }
+        return false;
     }
 
-    /**
-     * @brief Vytlačí obsah celej hash mapy.
-     */
-    void print() {
+    // get value
+    string get(const string &key) {
+        int h = hash(key);
+        for (MapEntry &entry: buckets[h]) {
+            if (entry.key == key) return entry.value;
+        }
+        throw runtime_error("No such key");
+    }
+
+    int size() const {
+        return elementCount;
+    }
+
+    string to_string() {
+        string r;
         for (int i = 0; i < buckets.size(); i++) {
-            cout << "[" << i << "]" << " : ";
-            if (buckets[i]) buckets[i]->print();
-            else cout << "NULL";
-            cout << endl;
+            r += std::to_string(i) + " : ";
+            for (MapEntry &entry: buckets[i]) {
+                r += "[" + entry.key + "]" + entry.value + "; ";
+            }
+            r += "\n";
         }
-    }
-
-    /**
-     * @brief Vloží hodnotu do hash mapy, ak ešte neexistuje.
-     * @param hodnota Hodnota, ktorá sa má vložiť.
-     * @return true, ak bola hodnota vložená; false, ak už existovala.
-     */
-    bool insert(int hodnota) {
-        const int hash = calc_hash(hodnota);
-        if (!buckets[hash]) {
-            buckets[hash] = new PrvokZoznamu(hodnota);
-            return true;
-        } else {
-            PrvokZoznamu *zoznam = buckets[hash];
-            PrvokZoznamu *vlozeny = zoznam->insert(hodnota);
-            return vlozeny != nullptr;
-        }
-    }
-
-    /**
-     * @brief Skontroluje, či daná hodnota existuje v hash mape.
-     * @param hodnota Hľadaná hodnota.
-     * @return Index vedra, v ktorom sa hodnota nachádza; -1 ak neexistuje.
-     */
-    int contains(int hodnota) {
-        const int hash = calc_hash(hodnota);
-        if (!buckets[hash]) return -1;
-        PrvokZoznamu *najdeny = buckets[hash]->find(hodnota);
-        return najdeny != nullptr ? hash : -1;
-    }
-
-    /**
-     * @brief Odstráni danú hodnotu z hash mapy.
-     * @param hodnota Hodnota, ktorá sa má odstrániť.
-     */
-    void remove(int hodnota) {
-        const int hash = calc_hash(hodnota);
-        if (!buckets[hash]) return;
-        PrvokZoznamu *novy_prvy = buckets[hash]->remove(hodnota);
-        buckets[hash] = novy_prvy;
-    }
-
-    /**
-     * @brief Dekštruktor, ktorý uvoľní všetky prvky hash mapy.
-     */
-    ~HashMap() {
-        for (PrvokZoznamu *bucket: buckets) {
-            bucket->clear();
-        }
+        return r;
     }
 };
+
+int main() {
+    HashMap hm(5);
+    hm.put("a", "foo");
+    hm.put("b", "bar");
+    hm.put("ab", "baaaz");
+    hm.put("ba", "baz");
+
+    cout << hm.to_string() << endl;
+
+    hm.put("ba", "nova hodnota");
+
+    cout << hm.to_string() << endl;
+
+    hm.remove("a");
+
+    cout << hm.to_string() << endl;
+
+
+    return 0;
+}
 ```
 
 # Vysvetlenie
 
-## Trieda `PrvokZoznamu`
+## 1. Trieda `MapEntry`
 
-Predstavuje **prvok obojstranného zoznamu** (`doubly linked list`), ktorý sa používa v každom "vedre" hash mapy.
+```c++
+class MapEntry {
+public:
+    string key;
+    string value;
 
-### Atribúty:
+    MapEntry(string key, string value) {
+        this->key = key;
+        this->value = value;
+    }
+};
+```
 
-- `int hodnota` – hodnota, ktorú prvok reprezentuje
-- `PrvokZoznamu *dalsi` – ukazateľ na nasledujúci prvok
-- `PrvokZoznamu *predchadzajuci` – ukazateľ na predchádzajúci prvok
+Táto trieda predstavuje **jednu položku v mape**, teda jednu dvojicu:
 
-### Metódy:
+- `key` = kľúč
+- `value` = hodnota
 
-#### `explicit PrvokZoznamu(int hodnota)`
+### Čo obsahuje:
 
-- Konštruktor, ktorý nastaví hodnotu prvku.
+- `string key;`  
+  uchováva kľúč, podľa ktorého budeme vyhľadávať
+- `string value;`  
+  uchováva hodnotu priradenú ku kľúču
 
-#### `void print()`
+### Konštruktor
 
-- Rekurzívne vypisuje všetky hodnoty od tohto prvku ďalej.
+```c++
+MapEntry(string key, string value) {
+    this->key = key;
+    this->value = value;
+}
+```
 
-#### `PrvokZoznamu* find(int najdi)`
+Konštruktor nastaví počiatočný kľúč a hodnotu objektu.
 
-- Hľadá v zozname prvok s danou hodnotou.
-- Ak nájde, vráti pointer, inak `nullptr`.
+- `this->key` znamená: členská premenná objektu
+- pravá `key` je parameter konštruktora
 
-#### `PrvokZoznamu* last()`
+Inými slovami:
 
-- Vráti posledný prvok v zozname (prechádza cez `dalsi`).
+- do objektu sa uloží zadaný kľúč
+- do objektu sa uloží zadaná hodnota
 
-#### `PrvokZoznamu* first()`
+---
 
-- Vráti prvý prvok v zozname (prechádza späť cez `predchadzajuci`).
+## 2. Trieda `HashMap`
 
-#### `PrvokZoznamu* insert(int nova_hodnota)`
+```c++
+class HashMap {
+private:
+    vector<vector<MapEntry> > buckets;
+    int capacity;
+    int elementCount;
+```
 
-- Najprv overí, či hodnota už neexistuje (`find()`).
-- Ak nie, vytvorí nový prvok a vloží ho na koniec zoznamu.
-- Vráti pointer na nový prvok alebo `nullptr`, ak už existuje.
+Toto je hlavná trieda programu — vlastná implementácia hash mapy.
 
-#### `PrvokZoznamu* remove(int na_vymazanie)`
+---
 
-- Odstráni prvok so zadanou hodnotou.
-- Upraví odkazy `predchadzajuci` a `dalsi`, aby bol zoznam stále súvislý.
-- Ak sa odstraňuje prvý prvok, vráti nový začiatok zoznamu.
-- Nevracia nič pri zlyhaní, čo môže byť nebezpečné (viď nižšie).
+### 2.1 Premenné triedy
 
-#### `void clear()`
+#### `vector<vector<MapEntry>> buckets;`
 
-- Vymaže celý zoznam od konca smerom k začiatku, bezpečne uvoľní pamäť.
+Toto je najdôležitejšia časť implementácie.
 
-## Trieda `HashMap`
+- vonkajší `vector` predstavuje pole priehradiek, teda **bucketov**
+- každý bucket je vnútorný `vector<MapEntry>`
+- v každom buckete môže byť viacero položiek
 
-Trieda, ktorá simuluje **jednoduchú hash mapu**.
+Prečo viacero?  
+Pretože rôzne kľúče môžu mať **rovnaký hash index**. Tomu sa hovorí **kolízia**.
 
-### Atribúty:
+Takže:
 
-- `vector<PrvokZoznamu*> buckets` – pole "vedier", v ktorých sú ukazatele na zoznamy (kvôli kolíziám).
-- `int kapacita` – počet vedier, ktoré určujú, ako dobre hash rozdeľuje dáta.
+- hash funkcia určí index bucketu
+- do daného bucketu sa vloží položka
+- ak tam už niečo je, nová položka sa tam len pridá
 
-### Metódy:
+Tento spôsob riešenia kolízií sa volá **separate chaining**.
 
-#### `explicit HashMap(int kapacita)`
+---
 
-- Vytvorí hash mapu s daným počtom prázdnych vedier (inicializovaných na `nullptr`).
+#### `int capacity;`
 
-#### `int calc_hash(int hodnota)`
+Udáva počet bucketov.
 
-- Jednoduchá hashovacia funkcia: `hodnota % kapacita`
-- Vracia index vedra, do ktorého patrí hodnota.
+Ak je `capacity = 5`, tak existujú buckety s indexami:
 
-#### `void print()`
+- 0
+- 1
+- 2
+- 3
+- 4
 
-- Vypíše všetky vedrá a ich obsahy (volá `print()` na `PrvokZoznamu`).
+---
 
-#### `bool insert(int hodnota)`
+#### `int elementCount;`
 
-- Vloží novú hodnotu do správneho vedra (podľa hash).
-- Ak vedro ešte neexistuje, vytvorí nový prvok.
-- Ak existuje, volá `insert()` na zozname.
-- Vráti `true` ak sa hodnota vložila, inak `false`.
+Počíta počet skutočne uložených prvkov v mape.
 
-#### `int contains(int hodnota)`
+To znamená:
 
-- Skontroluje, či hodnota existuje v danom vedre (pomocou `find()`).
-- Ak sa nájde, vráti index vedra, inak `-1`.
+- pri vložení novej položky sa zvýši
+- pri odstránení sa zníži
 
-#### `void remove(int hodnota)`
+---
 
-- Odstráni prvok s danou hodnotou.
-- Ak po odstránení je prvý prvok iný, aktualizuje vedro.
+## 3. Hash funkcia
 
-#### `~HashMap()`
+```c++
+int hash(string key) {
+    int sum = 0;
+    for (char c: key) {
+        sum = sum + c;
+    }
+    return sum % capacity;
+}
+```
 
-- Destruktor, ktorý volá `clear()` pre každý zoznam vo vedrách a uvoľní pamäť.
+Táto funkcia premení reťazec `key` na číslo — index bucketu.
 
+### Ako funguje:
 
+1. nastaví `sum = 0`
+2. prejde všetky znaky v reťazci
+3. ku `sum` pripočíta ASCII hodnotu každého znaku
+4. výsledok vezme modulo `capacity`
+
+### Príklad:
+
+Ak `capacity = 5` a kľúč je `"ab"`:
+
+- `'a'` má ASCII hodnotu 97
+- `'b'` má ASCII hodnotu 98
+- súčet = 195
+- `195 % 5 = 0`
+
+Takže `"ab"` pôjde do bucketu `0`.
+
+---
+
+### Dôležitá poznámka
+
+Táto hash funkcia je **veľmi jednoduchá** a vhodná na výučbu, ale nie je ideálna pre reálne použitie.
+
+Napríklad:
+
+- `"ab"` a `"ba"` dajú rovnaký súčet
+- teda skončia v tom istom buckete
+
+To je síce zámerne jednoduché na pochopenie, ale v praxi by sa používala kvalitnejšia hash funkcia.
+
+---
+
+## 4. Konštruktor `HashMap`
+
+```c++
+HashMap(int capacity = 10) {
+    this->capacity = capacity;
+    elementCount = 0;
+    buckets.resize(capacity);
+}
+```
+
+Konštruktor vytvorí novú hash mapu.
+
+### Čo robí:
+
+- nastaví počet bucketov
+- nastaví počet prvkov na 0
+- pripraví `buckets` na požadovanú veľkosť
+
+### `int capacity = 10`
+
+To znamená, že ak pri vytváraní objektu nezadáme veľkosť, automaticky bude 10.
+
+Príklady:
+
+```c++
+HashMap a;
+```
+
+→ použije kapacitu 10
+
+```c++
+HashMap b(5);
+```
+
+→ použije kapacitu 5
+
+### `buckets.resize(capacity);`
+
+Tým sa vytvorí daný počet prázdnych bucketov.
+
+---
+
+## 5. Metóda `put` — vloženie alebo aktualizácia
+
+```c++
+void put(string key, string value) {
+    int h = hash(key);
+    for (MapEntry& entry: buckets[h]) {
+        if (entry.key == key) {
+            entry.value = value;
+            return;
+        }
+    }
+    buckets[h].push_back(MapEntry(key, value));
+    elementCount++;
+}
+```
+
+Táto metóda:
+
+- vloží nový pár `key -> value`
+- alebo aktualizuje hodnotu, ak kľúč už existuje
+
+---
+
+### Podrobný postup
+
+#### 1. Vypočíta hash index
+
+```c++
+int h = hash(key);
+```
+
+Nájde, do ktorého bucketu patrí daný kľúč.
+
+---
+
+#### 2. Prejde všetky prvky v danom buckete
+
+```c++
+for (MapEntry& entry: buckets[h]) {
+```
+
+Keďže v buckete môže byť viac položiek kvôli kolíziám, treba ich prejsť.
+
+Tu je dôležité `MapEntry& entry`:
+
+- ide o **referenciu**
+- teda pracujeme priamo s pôvodným objektom v buckete
+- vďaka tomu vieme meniť jeho `value`
+
+---
+
+#### 3. Ak kľúč už existuje, zmení hodnotu
+
+```c++
+if (entry.key == key) {
+    entry.value = value;
+    return;
+}
+```
+
+Ak sa našiel rovnaký kľúč:
+
+- neukladá nový prvok
+- len prepíše hodnotu
+- ukončí funkciu
+
+To je správne správanie mapy: jeden kľúč má len jednu aktuálnu hodnotu.
+
+---
+
+#### 4. Ak sa kľúč nenašiel, pridá nový prvok
+
+```c++
+buckets[h].push_back(MapEntry(key, value));
+elementCount++;
+```
+
+- vytvorí sa nový `MapEntry`
+- vloží sa na koniec bucketu
+- počet prvkov sa zvýši
+
+---
+
+## 6. Metóda `remove` — odstránenie prvku
+
+```c++
+void remove(string key) {
+    int h = hash(key);
+    for (int i = 0; i < buckets[h].size(); i++) {
+        if (buckets[h][i].key == key) {
+            buckets[h][i] = buckets[h][buckets[h].size() - 1];
+            buckets[h].pop_back();
+            elementCount--;
+            return;
+        }
+    }
+}
+```
+
+Táto metóda odstráni prvok s daným kľúčom, ak existuje.
+
+---
+
+### Podrobný postup
+
+#### 1. Nájde správny bucket
+
+```c++
+int h = hash(key);
+```
+
+---
+
+#### 2. Prechádza prvky podľa indexu
+
+```c++
+for (int i = 0; i < buckets[h].size(); i++) {
+```
+
+Tu sa ide cez indexy, nie cez `for-each`, pretože budeme odstraňovať prvok.
+
+---
+
+#### 3. Hľadá zhodu kľúča
+
+```c++
+if (buckets[h][i].key == key) {
+```
+
+---
+
+#### 4. Samotné odstránenie
+
+```c++
+buckets[h][i] = buckets[h][buckets[h].size() - 1];
+buckets[h].pop_back();
+elementCount--;
+return;
+```
+
+Toto je zaujímavý trik:
+
+- prvok, ktorý chceme odstrániť, sa nahradí posledným prvkom bucketu
+- potom sa posledný prvok zmaže pomocou `pop_back()`
+
+### Prečo sa to robí?
+
+Je to efektívnejšie než posúvať všetky ďalšie prvky doľava.
+
+### Nevýhoda:
+
+Zmení sa poradie prvkov v buckete.
+
+V tomto programe to nevadí, pretože hash mapa nepotrebuje zachovávať poradie.
+
+---
+
+## 7. Metóda `containsKey`
+
+```c++
+bool containsKey(string key) {
+    int h = hash(key);
+    for (MapEntry entry: buckets[h]) {
+        if (entry.key == key) return true;
+    }
+    return false;
+}
+```
+
+Táto metóda zisťuje, či sa daný kľúč v mape nachádza.
+
+### Postup:
+
+- vypočíta bucket
+- prejde všetky položky v buckete
+- ak nájde zhodu, vráti `true`
+- inak po skončení cyklu vráti `false`
+
+### Poznámka
+
+Tu sa používa:
+
+```c++
+for (MapEntry entry: buckets[h])
+```
+
+teda kópia prvku, nie referencia.  
+Keďže sa objekt nemení, funguje to správne. Efektívnejšie by však bolo použiť referenciu, napríklad:
+
+```c++
+for (const MapEntry& entry : buckets[h])
+```
+
+Ale na pochopenie princípu je aktuálna verzia úplne v poriadku.
+
+---
+
+## 8. Metóda `get`
+
+```c++
+string get(string key) {
+    int h = hash(key);
+    for (MapEntry entry: buckets[h]) {
+        if (entry.key == key) return entry.value;
+    }
+    throw runtime_error("No such key");
+}
+```
+
+Táto metóda vráti hodnotu patriacu ku kľúču.
+
+### Ako funguje:
+
+- nájde správny bucket
+- prejde položky v buckete
+- ak nájde kľúč, vráti jeho hodnotu
+- ak nie, vyhodí chybu
+
+### `throw runtime_error("No such key");`
+
+To znamená, že ak kľúč neexistuje, program oznámi chybu.
+
+Je to podobné ako povedať:
+> „Požadovaný kľúč sa v mape nenachádza.“
+
+### Dôležité
+
+Pri použití tejto metódy by bolo dobré vedieť, že môže skončiť výnimkou. Preto sa v praxi často pred `get()` volá
+`containsKey()`.
+
+---
+
+## 9. Metóda `size`
+
+```c++
+int size() {
+    return elementCount;
+}
+```
+
+Veľmi jednoduchá metóda.
+
+Vráti počet uložených prvkov v hash mape.
+
+Ak máme uložené 4 dvojice kľúč-hodnota, vráti `4`.
+
+---
+
+## 10. Metóda `to_string`
+
+```c++
+string to_string() {
+    string r = "";
+    for (int i = 0; i < buckets.size(); i++) {
+        r += std::to_string(i) + " : ";
+        for (MapEntry entry: buckets[i]) {
+            r += "[" + entry.key + "]" + entry.value + "; ";
+        }
+        r += "\n";
+    }
+    return r;
+}
+```
+
+Táto metóda vytvorí textový výpis obsahu hash mapy.
+
+---
+
+### Čo robí:
+
+- vytvorí prázdny reťazec `r`
+- prejde všetky buckety
+- ku každému vypíše jeho index
+- potom vypíše všetky položky, ktoré sa v ňom nachádzajú
+
+### Formát výpisu
+
+Napríklad:
+
+```c++
+0 : [ab]baaaz; [ba]baz;
+1 : [a]foo;
+2 : [b]bar;
+3 :
+4 :
+```
+
+To je veľmi užitočné pri výučbe, lebo študent vidí:
+
+- do ktorého bucketu sa kľúče dostali
+- kde vznikli kolízie
+- ako sa mení štruktúra po vložení či odstránení
+
+---
+
+## 11. Funkcia `main`
+
+```c++
+int main() {
+    HashMap hm(5);
+    hm.put("a", "foo");
+    hm.put("b", "bar");
+    hm.put("ab", "baaaz");
+    hm.put("ba", "baz");
+
+    cout << hm.to_string() << endl;
+
+    hm.put("ba", "nova hodnota");
+
+    cout << hm.to_string() << endl;
+
+    hm.remove("a");
+
+    cout << hm.to_string() << endl;
+
+    return 0;
+}
+```
+
+Tu sa ukazuje praktické použitie triedy `HashMap`.
+
+---
+
+### 11.1 Vytvorenie hash mapy
+
+```c++
+HashMap hm(5);
+```
+
+Vytvorí sa hash mapa s kapacitou 5 bucketov.
+
+Teda indexy bucketov budú `0` až `4`.
+
+---
+
+### 11.2 Vkladanie prvkov
+
+```c++
+hm.put("a", "foo");
+hm.put("b", "bar");
+hm.put("ab", "baaaz");
+hm.put("ba", "baz");
+```
+
+Do mapy sa vložia 4 položky.
+
+### Zaujímavé je:
+
+- `"ab"` a `"ba"` majú rovnaký súčet znakov
+- preto pravdepodobne skončia v tom istom buckete
+
+To je presne ukážka kolízie.
+
+---
+
+### 11.3 Prvý výpis
+
+```c++
+cout << hm.to_string() << endl;
+```
+
+Vypíše sa aktuálny stav hash mapy po vložení prvkov.
+
+Študent tu vidí:
+
+- ktoré buckety sú prázdne
+- kde sa nachádzajú jednotlivé položky
+- ktoré kľúče skončili spolu v jednom buckete
+
+---
+
+### 11.4 Aktualizácia existujúceho kľúča
+
+```c++
+hm.put("ba", "nova hodnota");
+```
+
+Tu sa nevkladá nový prvok.  
+Keďže kľúč `"ba"` už v mape existuje, iba sa zmení jeho hodnota na `"nova hodnota"`.
+
+To demonštruje, že `put()` neslúži len na vkladanie, ale aj na aktualizáciu.
+
+---
+
+### 11.5 Druhý výpis
+
+```c++
+cout << hm.to_string() << endl;
+```
+
+Teraz by mal byť obsah rovnaký ako predtým, ale hodnota pri kľúči `"ba"` už bude nová.
+
+---
+
+### 11.6 Odstránenie prvku
+
+```c++
+hm.remove("a");
+```
+
+Z mapy sa odstráni položka s kľúčom `"a"`.
+
+---
+
+### 11.7 Tretí výpis
+
+```c++
+cout << hm.to_string() << endl;
+```
+
+Nakoniec sa zobrazí stav mapy po odstránení prvku.
+
+Takto je pekne vidieť celý životný cyklus údajov:
+
+- vloženie
+- aktualizácia
+- odstránenie
+
+---
+
+## 12. Zhrnutie
+
+Tento program ukazuje, ako možno od základov vytvoriť jednoduchú hash mapu:
+
+- `MapEntry` predstavuje jednu dvojicu kľúč-hodnota
+- `HashMap` obsahuje pole bucketov
+- hash funkcia určuje, do ktorého bucketu prvok patrí
+- kolízie sa riešia ukladaním viacerých prvkov do jedného bucketu
+- metódy `put`, `remove`, `containsKey`, `get`, `size`, `to_string` ukazujú základné operácie nad mapou
+- `main()` všetko demonštruje na konkrétnych príkladoch
