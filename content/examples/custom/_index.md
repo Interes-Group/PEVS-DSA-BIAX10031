@@ -4,6 +4,7 @@ title: 'Vlastné kontajnery'
 ---
 
 {{< cards cols="2" >}}
+{{< card link="./linkedlist" title="Zreťazený zoznam" subtitle="Implementácia obojstranne zreťazeného zoznamu" icon="" >}}
 {{< card link="./hashset" title="HashSet" subtitle="Implementácia hash setu s číslami" icon="" >}}
 {{< card link="./hashmap" title="HashMap" subtitle="Implementácia hash mapy s reťazcami" icon="" >}}
 {{< card link="./queue" title="Fronta" subtitle="Jednoduchá implementácia fronty reťazcov" icon="" >}}

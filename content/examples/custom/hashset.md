@@ -1,6 +1,6 @@
 ---
 date: '2026-03-09T23:59:06+01:00'
-title: 'Hashset'
+title: 'HashSet'
 ---
 
 Tento kód je jednoduchá implementácia množiny (HashSet) pre celé čísla v jazyku C++.
