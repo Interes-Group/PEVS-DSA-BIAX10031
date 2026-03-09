@@ -26,7 +26,9 @@ cascade:
 ## ✨ Vlastné implementácie kontajnerov
 
 {{< cards cols="2" >}}
-{{< card link="./custom/hashmap" title="HashMap" subtitle="Implementácia hash mapy s číslami" icon="" >}}
+{{< card link="./custom/linkedlist" title="Zreťazený zoznam" subtitle="Implementácia obojstranne zreťazeného zoznamu" icon="" >}}
+{{< card link="./custom/hashset" title="HashSet" subtitle="Implementácia hash setu s číslami" icon="" >}}
+{{< card link="./custom/hashmap" title="HashMap" subtitle="Implementácia hash mapy s reťazcami" icon="" >}}
 {{< card link="./custom/queue" title="Fronta" subtitle="Jednoduchá implementácia fronty reťazcov" icon="" >}}
 {{< card link="./custom/stack" title="Stack" subtitle="Jednoduchá implementácia zásobníka reťazcov" icon="" >}}
 {{< /cards >}}
