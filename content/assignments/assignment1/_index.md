@@ -35,11 +35,6 @@ V prípade otázok, problémov alebo akejkoľvek potreby konzultácií môžte k
 
 # 🛡️ SENTINEL – Systém pre spracovanie sieťových hrozieb
 
-![C++ 17](https://img.shields.io/badge/language-C++17-blue)
-![Deadline 25.03.2026 23:59](https://img.shields.io/badge/deadline-25.03.2026%2023%3A59-red)
-[![Github Classrom](https://img.shields.io/badge/GitHub-Classroom-green)](https://classroom.github.com/classrooms)
-[![Static Badge](https://img.shields.io/badge/Web-DSA.Interes.Group-aquamarine)](https://dsa.interes.group/assignments/assignments1)
-
 Cieľom zadania je implementovať jednoduchú konzolovú aplikáciu (tzv. CLI - command line interface)
 pre zachytenie a vyriešenie sieťových incidentov.
 
