@@ -1,23 +1,20 @@
 ---
-date: '2025-03-09T17:26:55+01:00'
+date: '2025-03-23T20:54:42+01:00'
 title: 'Cvičenie 04'
 type: 'exercise'
 weight: 4
 ---
 
-V tomto cvičení si prejdeme rôzne implementácie stromu a grafu a práce s nimi. Práce so stromovými štruktúrami patria
-medzi základné znalosti pre každého programátora a stretneme sa s nimi všade.
+Toto cvičenie si precvičíme triediace algoritmy, bubble sort, merge sort a quick sort na vektore a liste.
+Pre programátora je dôležité vedieť ako správne a efektívne zotriediť prvky v štruktúre či kontajnery.
 
-Cvičenie preverí vašu znalosť tried a pointrov, nakoľko prepojenia v rámci stromu, čo grafu musia byť presne.
-
-{{< pdf "./pevs-dsa-graphs_trees.pdf" >}}
+{{< pdf "./pevs-dsa-sort.pdf" >}}
 
 ### Náplň
 
-- implementáciu N-árneho stromu
-- prechádzanie do hĺbky
-- implementácia prefixové stromu a efektívne indexovanie stringov
-- implementácia grafu
+- Implementácia Bubble sort na kontajnery `vector<string>`
+- Implementácia Merge sort na kontajnery `list<string>`
+- Implementácia Quick sort na kontajnery `list<string>`
 
 > [!IMPORTANT]
 > Ak používate ako vývojové prostredie lokálny a editor a následnú kompiláciu cez terminál. Použite príkaz:
@@ -36,7 +33,7 @@ jazyka C++.
 ## Úlohy
 
 {{< cards cols="2" >}}
-{{< card link="./task-4-1" title="Úloha 4.1" subtitle="Prechádzanie stromu do hĺbky" icon="document" >}}
-{{< card link="./task-4-2" title="Úloha 4.2" subtitle="Prefixový strom (Trie)" icon="document" >}}
-{{< card link="./task-4-2" title="Úloha 4.3" subtitle="Ováhovaný graf" icon="document" >}}
+    {{< card link="./task-4-1" title="Úloha 4.1" subtitle="Bubble sort" icon="document" >}}
+    {{< card link="./task-4-2" title="Úloha 4.2" subtitle="Merge sort" icon="document" >}}
+    {{< card link="./task-4-3" title="Úloha 4.3" subtitle="Quick sort" icon="document" >}}
 {{< /cards >}}

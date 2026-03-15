@@ -1,35 +1,38 @@
 ---
-date: '2025-03-23T20:54:22+01:00'
+date: '2025-03-09T17:27:55+01:00'
 title: 'Úloha 5.3'
 weight: 3
 ---
 
 Napíšte program, zdrojový kód, v jazyku C++ použitím štandardu C++17, ktorý realizuje nasledovnú činnosť.
 
-Implementujte trieďací algoritmus **Quick sort** na STL kontajnery `list<string>`, t.j. zreťazený zoznam reťazcov.
-Pre porovnanie prvkov zoznamu môžte použiť funkciu [
-`std::strcmp()`](https://en.cppreference.com/w/cpp/string/byte/strcmp).
-Funkciu pre zotriedenie zoznamu implementujte tak aby bolo možné zadať ako parameter či má algoritmus zotriediť prvky
-vzostupne (prvé sú reťazce čo lexikograficky skôr), zostupne (prvé sú reťazce, ktoré sú lexikograficky neskôr).
+Implementujte graf, ktorého hrany majú definovanú váhu, t.j. **ováhovaný graf**. Uzol grafu má označenie '**label**' typu
+`string`. Hrana spájajúca dva uzly musí mať definovanú **váhu** typu `int`. Hrany medzi uzlami nemajú orientáciu a tak 
+prechádzanie medzi uzlami môže byť oboma smermi.
 
-> [!IMPORTANT]
-> Dajte si pozor na to, že STL `list` nemá prísť k prvkov cez index (t.j. nie je `list.at()` alebo `list[0]`).
-> Pre prechádzanie zoznamu použite iterátor (`list.begin()` a `list.end()`). Inštancií iterátora môžte mať viacero na
-> jeden
-> zoznam.
+Pre graf implementujte nasledovné metódy:
 
-Viac o Quick sort algoritme sa viete dozvedieť napríklad na stránkach:
-
-- [https://en.wikipedia.org/wiki/Quicksort](https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm)
-- [https://www.programiz.com/dsa/quick-sort](https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm)
-- [https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm](https://www.geeksforgeeks.org/quick-sort-algorithm/?ref=shm)
+- `bool add_vertex(Vertex*, int*)` - Pridanie nového uzla do grafu. Metóda má byť ako public člen triedy Vertex. Prvý
+  argument je **pointer na uzol** s ktorým chceme prepojenie vytvoriť. Druhý argument je **váha hrany**, ktorá bude vytvorená
+  medzi týmito dvomi uzlami.
+- `int count(vector<string>*)` - Ak váha hrany predstavuje cenu, ktorú treba zaplatiť aby sme prešli po danej hrane na
+  ďalší uzol, tak táto metóda vráti celkovú cenu cesty z uzla na uzol. Argument metódy je cesta prechádzania uzlov, kde
+  prvok vektora je označenie (_label_) uzla. Ak taká cesta v grafe existuje metóda vráti jej celkovú cenu. Ak cesta
+  neexistuje, t.j. neexistuje hrana, ktorá by prepojila dva uzly, ktoré sú za sebou definové vo vstupnom vektore, metóda
+  vráti hodnotu `-1`.
 
 ### Príklady vstupov / výstupov programu
 
-```cpp
-["Milan", "Martin", "Eva"] -sort-> ["Eva","Martin","Milan"]
+Ak máme graf s nasledujúcou štruktúrou:
 
-["Fero", "Jano", ""]       -sort-> ["", "Fero", "Jano"]
+![graph](/images/task43-weighted-graph.png)
+
+Volanie funkcie pre výpočet celkovej ceny cesty (celkovej váhy) má nasledovné výsledky:
+
+```cpp
+count({1,4,3}) == 8;
+count({2,5,1,4}) == 14;
+count({3,1,2,5,1}) == 18;
 ```
 
 ---
@@ -43,114 +46,130 @@ Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
 <!--
 
 
+Ováhovaný neorientovaný graf implementovaný pomocou triedy `Vertex`. Každý vrchol uchováva informácie o svojich susedoch a váhach hrán.
+
 ```cpp
 #include <iostream>
-#include <list>
+#include <unordered_map>
+#include <vector>
 #include <string>
-#include <cstring>    // pre std::strcmp
-#include <iterator>   // pre std::advance
 
 using namespace std;
 
-/**
- * Quick Sort pre std::list<std::string>, podporuje vzostupné aj zostupné poradie.
- *
- * @param lst        Zreťazený zoznam reťazcov (bude zotriedený in-place).
- * @param ascending  True = vzostupne (lexikograficky menšie prvky prvé),
- *                   False = zostupne (lexikograficky väčšie prvé).
- */
-void quickSort(list<string> &lst, bool ascending = true) {
-    // Ak je 0 alebo 1 prvok, nič nerobíme (už je zotriedené).
-    if (lst.size() <= 1) return;
+class Vertex {
+private:
+    string label;
+    unordered_map<string, pair<Vertex*, int>> neighbors; // mapa: label suseda -> (pointer, váha)
 
-    // 1) Vyberieme pivot: prvý prvok zoznamu
-    string pivot = move(lst.front());
-    lst.pop_front();
+public:
+    // Konštruktor
+    explicit Vertex(const string& lbl) : label(lbl) {}
 
-    // 2) Rozdelíme zvyšok zoznamu na dve časti: left (< pivot) a right (> pivot)
-    list<string> left, right;
-    auto cmp = [&](const string &a, const string &b) {
-        int r = std::strcmp(a.c_str(), b.c_str());
-        if (ascending)
-            return r <= 0;    // a menšie alebo rovné b => do left
-        else
-            return r >= 0;    // a väčšie alebo rovné b => do left
-    };
-
-    // Pre každý zostávajúci prvok rozhodneme, či ide do left alebo right
-    while (!lst.empty()) {
-        auto it = lst.begin();
-        if (cmp(*it, pivot))
-            left.splice(left.end(), lst, it);
-        else
-            right.splice(right.end(), lst, it);
+    // Getter pre label
+    string get_label() const {
+        return label;
     }
 
-    // 3) Rekurzívne zotriedime obidve časti
-    quickSort(left,  ascending);
-    quickSort(right, ascending);
+    // Pridanie hrany medzi this a druhým uzlom
+    bool add_vertex(Vertex* other, int* weight_ptr) {
+        if (!other || !weight_ptr) return false;
 
-    // 4) Zložíme späť do lst: najprv left, potom pivot, potom right
-    lst.splice(lst.end(), left);
-    lst.push_back(move(pivot));
-    lst.splice(lst.end(), right);
-}
+        const string& other_label = other->get_label();
 
-/** Pomocná funkcia na výpis obsahu std::list<std::string> */
-void printList(const list<string> &lst) {
-    cout << "[ ";
-    for (const auto &s : lst) {
-        cout << '"' << s << "\" ";
+        // Ak už je hrana medzi týmito uzlami, nepridávaj znova
+        if (neighbors.find(other_label) != neighbors.end()) {
+            return false;
+        }
+
+        // Pridaj hranu do oboch strán (graf je neorientovaný)
+        neighbors[other_label] = make_pair(other, *weight_ptr);
+        other->neighbors[label] = make_pair(this, *weight_ptr);
+
+        return true;
     }
-    cout << "]\n";
-}
+
+    // Spočítanie ceny cesty podľa zoznamu labelov
+    int count(vector<string>* path) {
+        if (!path || path->empty()) return -1;
+
+        int total_cost = 0;
+        Vertex* current = this;
+
+        for (size_t i = 1; i < path->size(); ++i) {
+            const string& next_label = (*path)[i];
+
+            auto it = current->neighbors.find(next_label);
+            if (it == current->neighbors.end()) {
+                return -1; // neexistuje hrana medzi current a next_label
+            }
+
+            total_cost += it->second.second; // pripočítaj váhu hrany
+            current = it->second.first;      // posuň sa na ďalší uzol
+        }
+
+        return total_cost;
+    }
+};
 
 int main() {
-    // Príklad 1: vzostupné zotriedenie
-    list<string> l1 = { "Milan", "Martin", "Eva" };
-    cout << "Povodny zoznam: ";
-    printList(l1);
-    quickSort(l1, true);
-    cout << "Zoradene vzostupne: ";
-    printList(l1);
-    // Očakávaný výstup: ["Eva", "Martin", "Milan"]
+    // Vytvorenie vrcholov
+    Vertex a("A");
+    Vertex b("B");
+    Vertex c("C");
+    Vertex d("D");
 
-    // Príklad 2: vzostupné s prázdnym reťazcom
-    list<string> l2 = { "Fero", "Jano", "" };
-    cout << "\nPovodny zoznam: ";
-    printList(l2);
-    quickSort(l2, true);
-    cout << "Zoradene vzostupne: ";
-    printList(l2);
-    // Očakávaný výstup: ["", "Fero", "Jano"]
+    // Vytvorenie hrán s váhami
+    int ab = 5;
+    int ac = 3;
+    int bc = 2;
+    int cd = 4;
 
-    // Príklad 3: zostupné zotriedenie
-    list<string> l3 = { "Apple", "Banana", "Cherry" };
-    cout << "\nPovodny zoznam: ";
-    printList(l3);
-    quickSort(l3, false);
-    cout << "Zoradene zostupne: ";
-    printList(l3);
-    // Očakávaný výstup: ["Cherry", "Banana", "Apple"]
+    a.add_vertex(&b, &ab);
+    a.add_vertex(&c, &ac);
+    b.add_vertex(&c, &bc);
+    c.add_vertex(&d, &cd);
+
+    // Cesta: A -> C -> D
+    vector<string> path1 = {"A", "C", "D"};
+    cout << "Cost A->C->D: " << a.count(&path1) << endl; // očakávané: 3 + 4 = 7
+
+    // Cesta: A -> B -> C -> D
+    vector<string> path2 = {"A", "B", "C", "D"};
+    cout << "Cost A->B->C->D: " << a.count(&path2) << endl; // očakávané: 5 + 2 + 4 = 11
+
+    // Neexistujúca cesta: A -> D
+    vector<string> path3 = {"A", "D"};
+    cout << "Cost A->D: " << a.count(&path3) << endl; // očakávané: -1
 
     return 0;
 }
 ```
 
-### Vysvetlenie riešenia
+### Vysvetlenie
+- Každý `Vertex` obsahuje mapu svojich susedov (`unordered_map<string, pair<Vertex*, int>>`), kde:
+  - `string` je `label` suseda,
+  - `Vertex*` je pointer na suseda,
+  - `int` je váha hrany.
+- Metóda `add_vertex()` zabezpečuje pridanie **obojstrannej hrany** (graf je neorientovaný).
+- Metóda `count()` počíta cenu cesty cez daný zoznam názvov uzlov – ak niektorá hrana chýba, vráti `-1`.
 
-1. **Výber pivotu**  
-   Zoberieme prvý prvok zoznamu (pivot) a odstránime ho z pôvodného zoznamu funkciou `pop_front()`.
-2. **Partition**  
-   Zvyšné uzly postupne presúvame do dvoch pomocných zoznamov `left` a `right` pomocou `splice`, podľa porovnania s
-   pivotom cez `std::strcmp`. Lambda `cmp` zohľadňuje, či chceme vzostupné alebo zostupné poradie.
-3. **Rekurzia**  
-   Zavoláme `quickSort` na `left` a `right`, ktoré majú menší počet prvkov.
-4. **Zlúčenie**  
-   Po zotriedení oboch častí ich uzly (a samotný pivot) pomocou `splice` a `push_back` spojíme naspäť do pôvodného `lst`
-   v správnom poradí.
+### Ukážkový výstup
 
-Týmto spôsobom triedime `std::list<std::string>` efektívne bez potreby prístupu na prvky cez indexy.
+```
+Cost A->C->D: 7
+Cost A->B->C->D: 11
+Cost A->D: -1
+```
+
+### ASCII vizualizácia
+
+```text
+     [A]
+     / \
+  5 /   \ 3
+   /     \
+ [B]--2--[C]--4--[D]
+```
 
 -->
 

@@ -48,12 +48,6 @@ cout << mnozina.to_string() << endl; // Jano, Fero
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
-
 ```cpp
 #include <iostream>
 #include <string>
@@ -175,5 +169,4 @@ int main() {
 }
 ```
 
--->
 {{< /details >}}

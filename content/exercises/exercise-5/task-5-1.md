@@ -1,29 +1,36 @@
 ---
-date: '2025-03-23T20:54:16+01:00'
+date: '2025-03-09T17:27:51+01:00'
 title: 'Úloha 5.1'
 weight: 1
 ---
 
 Napíšte program, zdrojový kód, v jazyku C++ použitím štandardu C++17, ktorý realizuje nasledovnú činnosť.
 
-Implementujte trieďací algoritmus **Bubble sort** na STL kontajnery `vector<string>`, t.j. vector reťazcov.
-Pre porovnanie prvkov vektora môžte použiť funkciu [
-`std::strcmp()`](https://en.cppreference.com/w/cpp/string/byte/strcmp).
-Funkciu pre zotriedenie vektora implementujte tak aby bolo možné zadať ako parameter či má algoritmus zotriediť prvky
-vzostupne (prvé sú reťazce čo lexikograficky skôr), zostupne (prvé sú reťazce, ktoré sú lexikograficky neskôr).
+Implementujte **N-árny strom**, t.j. strom ktorého uzol môže mať 0 až N detí. Každý uzol stromu má označenie '**label**'
+typu `string`. **Deti** uzla musia byť **unikátne**. Uzol implementujte ako triedu. Aplikujte princípy zaprúzdrenia (private
+atribúty, getter, setter a ďalšie).
+Pre uzol implementujte metódu:
 
-Viac o Bubble sort algoritme sa viete dozvedieť napríklad na stránkach:
+- `bool add_child(Node*)` - Pridá do uzla nový detský uzol. Metóda **pridá uzol ako dieťa** len ak poskytnutý uzol **ešte nie je
+  medzi detskými** uzlami. Metóda vráti true ak bol uzol úspešne pridaný medzi deti, inak vráti false.
 
-- [https://en.wikipedia.org/wiki/Bubble_sort](https://en.wikipedia.org/wiki/Bubble_sort)
-- [https://www.programiz.com/dsa/bubble-sort](https://www.programiz.com/dsa/bubble-sort)
-- [https://www.geeksforgeeks.org/bubble-sort-algorithm/](https://www.geeksforgeeks.org/bubble-sort-algorithm/)
+Implementujte metódu `string &traverse(Node*)`, ktorá bude implementovať **prechádzanie stromu do hĺbky**. Metódu
+implementujte pomocou **rekurzie**. Metóda vráti `string`, ktorý obsahuje označenie uzlov, cez ktoré algoritmus prechádzal
+oddelené čiarkou.
+
+Pre demonštráciu vypracovania vytvorte strom aspoň hĺbky 3 s ľubovolným počtom uzlov. Následne zavolajte metódu `traverse()`
+a výstup metódy vypíšte na štandardný výstup (`cout`).
 
 ### Príklady vstupov / výstupov programu
 
-```cpp
-["Milan", "Martin", "Eva"] -sort-> ["Eva","Martin","Milan"]
+Majme strom:
 
-["Fero", "Jano", ""]       -sort-> ["", "Fero", "Jano"]
+![strom](/images/task41-tree.png)
+
+Ak je strom implementovaný podľa zadania, tak výstup metódy traverse je 
+
+```
+1, 2, 5, 6, 7, 8, 4, 3
 ```
 
 ---
@@ -41,90 +48,156 @@ Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
 #include <iostream>
 #include <vector>
 #include <string>
-#include <cstring>  // pre std::strcmp
 
 using namespace std;
 
-/**
- * Bubble sort pre vector<string>, podporuje vzostupné aj zostupné poradie.
- *
- * @param arr       Vektor reťazcov, ktorý sa má zotriediť.
- * @param ascending True = vzostupne, False = zostupne.
- */
-void bubbleSort(vector<string> &arr, bool ascending = true) {
-    size_t n = arr.size();
-    for (size_t i = 0; i < n; ++i) {
-        // Po každom prejdení i prvkov na konci je už správne zoradených,
-        // preto vnútorný cyklus ide len do n - i - 1.
-        for (size_t j = 0; j + 1 < n - i; ++j) {
-            int cmp = std::strcmp(arr[j].c_str(), arr[j + 1].c_str());
-            // pre vzostupné poradie swapneme, ak je arr[j] > arr[j+1]
-            // pre zostupné, ak je arr[j] < arr[j+1]
-            if ((ascending  && cmp > 0) ||
-                (!ascending && cmp < 0)) {
-                std::swap(arr[j], arr[j + 1]);
+class Node {
+private:
+    string label;
+    vector<Node*> children;
+
+public:
+    // Konštruktor
+    explicit Node(const string& label) : label(label) {}
+
+    // Getter pre label
+    const string& get_label() const {
+        return label;
+    }
+
+    // Setter pre label
+    void set_label(const string& new_label) {
+        label = new_label;
+    }
+
+    // Getter pre deti
+    const vector<Node*>& get_children() const {
+        return children;
+    }
+
+    // Pridá dieťa, ak ešte nie je medzi deťmi (porovnáva pointer aj label)
+    bool add_child(Node* child) {
+        if (child == nullptr) return false;
+
+        for (size_t i = 0; i < children.size(); ++i) {
+            if (children[i] == child || children[i]->get_label() == child->get_label()) {
+                return false; // už existuje
             }
         }
-    }
-}
 
-/**
- * Pomocná funkcia na výpis vektora reťazcov.
- */
-void printVector(const vector<string> &v) {
-    cout << "[ ";
-    for (const auto &s : v) {
-        cout << '"' << s << "\" ";
+        children.push_back(child);
+        return true;
     }
-    cout << "]\n";
+};
+
+// Rekurzívna funkcia na DFS prechod stromom
+string traverse(Node* node) {
+    if (node == nullptr) return "";
+
+    string result = node->get_label();
+
+    const vector<Node*>& children = node->get_children();
+    for (size_t i = 0; i < children.size(); ++i) {
+        string sub = traverse(children[i]);
+        if (!sub.empty()) {
+            result += "," + sub;
+        }
+    }
+
+    return result;
 }
 
 int main() {
-    // Príklad 1: vzostupné poradie
-    vector<string> v1 = { "Milan", "Martin", "Eva" };
-    cout << "Povodny vektor: ";
-    printVector(v1);
+    // Vytvorenie uzlov
+    Node* root = new Node("A");
+    Node* b = new Node("B");
+    Node* c = new Node("C");
+    Node* d = new Node("D");
+    Node* e = new Node("E");
+    Node* f = new Node("F");
+    Node* g = new Node("G");
 
-    bubbleSort(v1, true);
-    cout << "Zoradene vzostupne: ";
-    printVector(v1);
-    // Očakávaný výstup: ["Eva", "Martin", "Milan"]
+    // Budovanie stromu
+    root->add_child(b);
+    root->add_child(c);
+    root->add_child(d);
 
-    // Príklad 2: vzostupné (obsahuje prázdny reťazec)
-    vector<string> v2 = { "Fero", "Jano", "" };
-    cout << "\nPovodny vektor: ";
-    printVector(v2);
+    b->add_child(e);
+    b->add_child(f);
 
-    bubbleSort(v2, true);
-    cout << "Zoradene vzostupne: ";
-    printVector(v2);
-    // Očakávaný výstup: ["", "Fero", "Jano"]
+    d->add_child(g);
 
-    // Príklad 3: zostupné poradie
-    vector<string> v3 = { "Apple", "Banana", "Cherry" };
-    cout << "\nPovodny vektor: ";
-    printVector(v3);
+    // Prechod stromu
+    string output = traverse(root);
+    cout << "DFS Traversal: " << output << endl;
 
-    bubbleSort(v3, false);
-    cout << "Zoradene zostupne: ";
-    printVector(v3);
-    // Očakávaný výstup: ["Cherry", "Banana", "Apple"]
+    // Uvoľnenie pamäte (keďže nepoužívame smart pointery)
+    delete root;
+    delete b;
+    delete c;
+    delete d;
+    delete e;
+    delete f;
+    delete g;
 
     return 0;
 }
 ```
 
-### Vysvetlenie
+### Vysvetlenie kódu
 
-- Funkcia `bubbleSort` prechádza vektor spustením dvoch vnútorných slučiek. Každým prechodom „buble“ najväčší (alebo
-  najmenší) prvok na koniec nespracovanej časti vektora.
-- Porovnanie reťazcov sa vykonáva pomocou `std::strcmp`, ktorý vracia:
-    - záporné číslo, ak je prvý reťazec lexikograficky menší,
-    - nulou, ak sú rovnaké,
-    - kladné číslo, ak je väčší.
-- Parameter `ascending` určuje, či sa swap uskutoční pre `cmp > 0` (vzostupne) alebo pre `cmp < 0` (zostupne).
-- V `main` sú ukážky troch príkladov: dva pre vzostupné zotriedenie (jeden vrátane prázdneho reťazca) a jeden pre
-  zostupné zotriedenie.
+#### 1. Trieda `Node`
+Predstavuje jeden uzol stromu. Obsahuje:
+- `label` – názov/označenie uzla (napr. `"A"`, `"B"`, atď.)
+- `children` – zoznam (vektor) ukazovateľov na detské uzly
+
+##### Dôležité metódy:
+- **`get_label()`** a **`set_label()`** – prístup k názvu uzla
+- **`get_children()`** – prístup k zoznamu detí
+- **`add_child(Node*)`** – pridanie dieťaťa, len ak ešte neexistuje (podľa pointera alebo mena)
+
+#### 2. Funkcia `traverse(Node*)`
+Implementuje **pre-order** (do hĺbky) prechod stromom:
+- Najprv navštívi aktuálny uzol
+- Potom rekurzívne prechádza všetky deti uzla
+- Výsledok je jeden reťazec s názvami uzlov oddelenými čiarkou
+
+#### 3. Funkcia `main()`
+- Vytvorí uzly stromu
+- Poskladá strom pomocou `add_child()`
+- Zavolá `traverse()` na koreň
+- Vypíše výsledok na štandardný výstup
+- Uvoľní alokovanú pamäť (`delete`)
+
+### Vizualizácia stromu
+
+Strom vyzerá takto (každý uzol je označený písmenom):
+
+```
+         A
+       / | \
+      B  C  D
+     / \     \
+    E   F     G
+```
+
+- **Koreň** je `A`
+- `A` má 3 deti: `B`, `C`, `D`
+- `B` má 2 deti: `E`, `F`
+- `D` má 1 dieťa: `G`
+- `C`, `E`, `F`, `G` sú listy (nemajú deti)
+
+### Výstup funkcie `traverse(root)`
+Prechod do hĺbky (pre-order) navštívi uzly v tomto poradí:
+```
+A → B → E → F → C → D → G
+```
+
+Čiže:
+```
+DFS Traversal: A,B,E,F,C,D,G
+```
 
 -->
+
 {{< /details >}}

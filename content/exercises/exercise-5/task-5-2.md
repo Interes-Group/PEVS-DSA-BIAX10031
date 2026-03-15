@@ -1,35 +1,57 @@
 ---
-date: '2025-03-23T20:54:19+01:00'
+date: '2025-03-09T17:27:54+01:00'
 title: 'Úloha 5.2'
 weight: 2
 ---
 
+**Trie (prefixový strom)** je efektívna dátová štruktúra na ukladanie a vyhľadávanie reťazcov, najmä keď pracujeme s
+veľkým množstvom slov so spoločnými prefixami. Každý uzol v strome reprezentuje jedno písmeno a cesty od koreňa k listom
+tvoria uložené slová. Trie umožňuje rýchle vyhľadávanie, vkladanie aj mazanie slov v čase O(m), kde *m* je dĺžka slova,
+a využíva sa napríklad v autokompletizácii, slovníkoch a indexovaní textu. Čím viac slov je uložených v štruktúre tím je
+efektívnejšia.
+
 Napíšte program, zdrojový kód, v jazyku C++ použitím štandardu C++17, ktorý realizuje nasledovnú činnosť.
 
-Implementujte trieďací algoritmus **Merge sort** na STL kontajnery `list<string>`, t.j. zreťazený zoznam reťazcov.
-Pre porovnanie prvkov zoznamu môžte použiť funkciu [
-`std::strcmp()`](https://en.cppreference.com/w/cpp/string/byte/strcmp).
-Funkciu pre zotriedenie zoznamu implementujte tak aby bolo možné zadať ako parameter či má algoritmus zotriediť prvky
-vzostupne (prvé sú reťazce čo lexikograficky skôr), zostupne (prvé sú reťazce, ktoré sú lexikograficky neskôr).
+Implementujte **prefixový strom, Trie**. Strom implementujte pomocou tried a dbajte na dodržanie princípov
+zaprúzdrenia (private atribúty, getter, setter a ďalšie). Každý uzol stromu, až na koreňový uzol (root),
+má označenie '**label**' jedno písmeno (typ `char`). Prefixový strom je N-árny strom. Každý uzol obsahuje
+aj označenie typu `bool` či ide **o ukončenie slova**. Ak má uzol označenia konca slova hodnotu `true`,
+tak existuje cesta v strome (t.j. slovo), ktorého písmeno uzla je posledné písmeno a tak cesta k danému uzlu
+predstavuje indexované slovo v strome.
 
 > [!IMPORTANT]
-> Dajte si pozor na to, že STL `list` nemá prísť k prvkov cez index (t.j. nie je `list.at()` alebo `list[0]`).
-> Pre prechádzanie zoznamu použite iterátor (`list.begin()` a `list.end()`). Inštancií iterátora môžte mať viacero na
-> jeden
-> zoznam.
+> Dobre si rozmyslite ako implementujete kontajner pre uchovanie detí uzla, dbajte na efektívne prehľadávanie.
 
-Viac o Merge sort algoritme sa viete dozvedieť napríklad na stránkach:
+Implementujte metódy stromu:
 
-- [https://en.wikipedia.org/wiki/Merge_sort](https://www.geeksforgeeks.org/merge-sort/?ref=shm)
-- [https://www.programiz.com/dsa/merge-sort](https://www.geeksforgeeks.org/merge-sort/?ref=shm)
-- [https://www.geeksforgeeks.org/merge-sort/?ref=shm](https://www.geeksforgeeks.org/merge-sort/?ref=shm)
+- `bool insert(string word)` - Vloží nové slovo do stromu. Metóda vráti hodnotu `true` ak bolo slovo úspešne vložené do
+  stromu, inak `false` (napr. slovo už v strome existuje a tak nemôže byť vložené druhý krát).
+- `bool contains(string word)` - Zistí či sa dané slovo nachádza v strome. Metóda vráti hodnotu `true` ak sa slovo
+  nachádza v strome, inak `false`.
 
 ### Príklady vstupov / výstupov programu
 
-```cpp
-["Milan", "Martin", "Eva"] -sort-> ["Eva","Martin","Milan"]
+Ak do prefixového stromu vložíme nasledovné slová:
 
-["Fero", "Jano", ""]       -sort-> ["", "Fero", "Jano"]
+```cpp
+Trie trie;
+trie.insert("Milan");
+trie.insert("Martin");
+trie.insert("Martina");
+trie.insert("Eva");
+```
+
+Strom bude mať nasledovnú štruktúru (farebne sú označené konce slov)
+
+![trie](/images/task42-trie.png)
+
+Následne pre kontrolu prítomnosti slov:
+
+```cpp
+trie.contains("Milan") == true
+trie.contains("Pavol") == true
+trie.contains("Martina") == true
+trie.contains("Martir") == true
 ```
 
 ---
@@ -45,117 +67,152 @@ Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
 
 ```cpp
 #include <iostream>
-#include <list>
 #include <string>
-#include <cstring>    // pre std::strcmp
+#include <unordered_map>
 
 using namespace std;
 
-/**
- * Zoradí zreťazený zoznam reťazcov pomocou algoritmu Merge Sort.
- *
- * @param lst        Zreťazený zoznam (std::list<std::string>&).
- *                   Po volaní bude obsahovať zotriedené prvky.
- * @param ascending  True = vzostupne (lexikograficky od "a" po "z"),
- *                   False = zostupne.
- */
-void mergeSort(list<string> &lst, bool ascending = true) {
-    // Základný prípad: triválne zotriedenie pre 0 alebo 1 prvok
-    if (lst.size() <= 1) return;
+// Trieda pre uzol Trie
+class TrieNode {
+private:
+    char label;
+    bool is_end_of_word;
+    unordered_map<char, TrieNode*> children;
 
-    // 1) Rozdelíme zoznam na dve polovice
-    list<string> left, right;
-    auto it = lst.begin();
-    std::advance(it, lst.size() / 2);  // posunieme iterátor na stred
-    // prvú polovicu [begin, it) presunieme do left
-    left.splice(left.begin(), lst, lst.begin(), it);
-    // zostávajúcu druhú polovicu presunieme do right
-    right.splice(right.begin(), lst, lst.begin(), lst.end());
-    // lst je teraz prázdny
+public:
+    // Konštruktor
+    TrieNode(char c) : label(c), is_end_of_word(false) {}
 
-    // 2) Rekurzívne zotriedime obe polovice
-    mergeSort(left, ascending);
-    mergeSort(right, ascending);
+    // Getter pre label
+    char get_label() const {
+        return label;
+    }
 
-    // 3) Zlúčime obidva zotriedené zoznamy späť do lst
-    auto cmp = [&](const string &a, const string &b) {
-        int r = std::strcmp(a.c_str(), b.c_str());
-        return ascending ? (r <= 0)   // pre vzostupne: a <= b
-                         : (r > 0);   // pre zostupne: a >  b
-    };
+    // Setter pre koncovosť
+    void set_end_of_word(bool value) {
+        is_end_of_word = value;
+    }
 
-    // iteratívne porovnávame fronty left a right
-    while (!left.empty() && !right.empty()) {
-        if (cmp(left.front(), right.front())) {
-            // zoznam lst doplníme prvým prvkom z left
-            lst.splice(lst.end(), left, left.begin());
-        } else {
-            lst.splice(lst.end(), right, right.begin());
+    // Getter pre koncovosť
+    bool is_end() const {
+        return is_end_of_word;
+    }
+
+    // Získaj potomka pre daný znak
+    TrieNode* get_child(char c) const {
+        auto it = children.find(c);
+        return it != children.end() ? it->second : nullptr;
+    }
+
+    // Pridaj dieťa, ak ešte neexistuje
+    TrieNode* add_child(char c) {
+        if (children.find(c) == children.end()) {
+            children[c] = new TrieNode(c);
+        }
+        return children[c];
+    }
+
+    // Prístup k všetkým deťom (pre prípadné rozšírenie)
+    const unordered_map<char, TrieNode*>& get_children() const {
+        return children;
+    }
+
+    // Destruktor – uvoľní všetky deti rekurzívne
+    ~TrieNode() {
+        for (auto& pair : children) {
+            delete pair.second;
         }
     }
-    // zvyšné prvky (jedného zo zoznamov) presunieme na koniec
-    if (!left.empty())
-        lst.splice(lst.end(), left);
-    if (!right.empty())
-        lst.splice(lst.end(), right);
-}
+};
 
-/** Pomocná funkcia na výpis obsahu list<string> */
-void printList(const list<string> &lst) {
-    cout << "[ ";
-    for (auto it = lst.begin(); it != lst.end(); ++it) {
-        cout << '"' << *it << "\" ";
+// Trieda pre samotný Trie strom
+class Trie {
+private:
+    TrieNode* root;
+
+public:
+    // Konštruktor
+    Trie() {
+        root = new TrieNode('\0'); // Koreň nemá platný znak
     }
-    cout << "]\n";
-}
 
+    // Vloženie slova do Trie
+    bool insert(const string& word) {
+        TrieNode* current = root;
+        for (char c : word) {
+            current = current->add_child(c);
+        }
+        if (current->is_end()) {
+            return false; // slovo už existuje
+        } else {
+            current->set_end_of_word(true);
+            return true;
+        }
+    }
+
+    // Kontrola či slovo existuje
+    bool contains(const string& word) const {
+        TrieNode* current = root;
+        for (char c : word) {
+            current = current->get_child(c);
+            if (!current) {
+                return false;
+            }
+        }
+        return current->is_end();
+    }
+
+    // Destruktor – uvoľní celý strom
+    ~Trie() {
+        delete root;
+    }
+};
+
+// Demonštrácia použitia
 int main() {
-    // Príklad 1: vzostupné zotriedenie
-    list<string> l1 = { "Milan", "Martin", "Eva" };
-    cout << "Povodny zoznam: ";
-    printList(l1);
-    mergeSort(l1, true);
-    cout << "Zoradene vzostupne: ";
-    printList(l1);
-    // Očakávaný výstup: ["Eva", "Martin", "Milan"]
+    Trie trie;
 
-    // Príklad 2: vzostupne s prazdnym retazcom
-    list<string> l2 = { "Fero", "Jano", "" };
-    cout << "\nPovodny zoznam: ";
-    printList(l2);
-    mergeSort(l2, true);
-    cout << "Zoradene vzostupne: ";
-    printList(l2);
-    // Očakávaný výstup: ["", "Fero", "Jano"]
+    cout << boolalpha; // výpis true/false namiesto 1/0
 
-    // Príklad 3: zostupne zotriedenie
-    list<string> l3 = { "Apple", "Banana", "Cherry" };
-    cout << "\nPovodny zoznam: ";
-    printList(l3);
-    mergeSort(l3, false);
-    cout << "Zoradene zostupne: ";
-    printList(l3);
-    // Očakávaný výstup: ["Cherry", "Banana", "Apple"]
+    // Vkladanie slov
+    cout << "Insert 'Milan': " << trie.insert("Milan") << endl;
+    cout << "Insert 'Martin': " << trie.insert("Martin") << endl;
+    cout << "Insert 'Martina': " << trie.insert("Martina") << endl;
+    cout << "Insert 'Eva': " << trie.insert("Eva") << endl;
+
+    // Overenie, že slová sú prítomné
+    cout << "\nContains 'Milan': " << trie.contains("Milan") << endl;
+    cout << "Contains 'Martin': " << trie.contains("Martin") << endl;
+    cout << "Contains 'Martina': " << trie.contains("Martina") << endl;
+    cout << "Contains 'Eva': " << trie.contains("Eva") << endl;
+
+    // Skúška s neexistujúcim slovom
+    cout << "\nContains 'Mar': " << trie.contains("Mar") << endl;
+
+    // Pokus o opätovné vloženie existujúceho slova
+    cout << "\nInsert 'Milan' again: " << trie.insert("Milan") << endl;
 
     return 0;
 }
 ```
 
-### Vysvetlenie stručne
+## Očakávaný výstup
 
-1. **Rozdeľ–a–zlúč**
-    - Zoznam sa rozdelí na dve polovice (`left` a `right`) pomocou operácie `splice`, ktorá má komplexnosť O(1) na každý
-      presun uzla.
-    - Potom sa rekurzívne zotriedia obe polovice.
-    - Nakoniec sa obe zotriedené polovice zlúčia do pôvodného `lst` porovnávaním front prvkov.
+```text
+Insert 'Milan': true
+Insert 'Martin': true
+Insert 'Martina': true
+Insert 'Eva': true
 
-2. **Porovnanie reťazcov**
-    - Používame `std::strcmp`, ktorý vracia negatívne číslo, nulové alebo kladné číslo podľa lexikografického poradia.
-    - Pomocou lambda-funkcie `cmp` sa rozhoduje, či jeden reťazec ide pred druhý pre vzostupné alebo zostupné zoradenie.
+Contains 'Milan': true
+Contains 'Martin': true
+Contains 'Martina': true
+Contains 'Eva': true
 
-3. **In-place triedenie**
-    - Všetky operácie nad zoznamom prebiehajú pomocou `splice`, takže sa nealokuje nová pamäť na uzly, iba sa mení ich
-      prepojenie, čo zabezpečuje efektívny merge sort pre `std::list`.
+Contains 'Mar': false
+
+Insert 'Milan' again: false
+```
 
 -->
 
