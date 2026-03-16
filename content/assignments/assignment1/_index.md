@@ -330,7 +330,7 @@ Pri zmene týchto súborov môže byť vypracovanie ohodnotené 0 bodmi.
 
 Vypracovanie zadania priebežne commitujte (`git commit`)/pushujte (`git push`) do repozitára vytvoreného GitHubom
 pre toto zadanie. Váš kód commitujte/pushujte do vetvy `main`. Hodnotený bude posledný commit/push do termínu odovzdania
-vypracovania. Vypracovanie je nutné odovzdať/commitnúť/pushnúť do repozitára **do 25.03.2026 23:59**. Neodovzdanie je
+vypracovania. Vypracovanie je nutné odovzdať/commitnúť/pushnúť do repozitára **do 29.03.2026 23:59**. Neodovzdanie je
 hodnotené 0 bodmi.
 
 V prípade otázok, alebo technických problémov môžete kontaktovať vyučujúcich na MS Teams alebo na univerzitnom emaily.
