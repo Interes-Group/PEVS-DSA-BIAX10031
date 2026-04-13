@@ -36,13 +36,6 @@ Viac o Quick sort algoritme sa viete dozvedieť napríklad na stránkach:
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
-
-
 ```cpp
 #include <iostream>
 #include <list>
@@ -151,7 +144,5 @@ int main() {
    v správnom poradí.
 
 Týmto spôsobom triedime `std::list<std::string>` efektívne bez potreby prístupu na prvky cez indexy.
-
--->
 
 {{< /details >}}

@@ -6,14 +6,16 @@ weight: 3
 
 Napíšte program, zdrojový kód, v jazyku C++ použitím štandardu C++17, ktorý realizuje nasledovnú činnosť.
 
-Implementujte graf, ktorého hrany majú definovanú váhu, t.j. **ováhovaný graf**. Uzol grafu má označenie '**label**' typu
-`string`. Hrana spájajúca dva uzly musí mať definovanú **váhu** typu `int`. Hrany medzi uzlami nemajú orientáciu a tak 
+Implementujte graf, ktorého hrany majú definovanú váhu, t.j. **ováhovaný graf**. Uzol grafu má označenie '**label**'
+typu
+`string`. Hrana spájajúca dva uzly musí mať definovanú **váhu** typu `int`. Hrany medzi uzlami nemajú orientáciu a tak
 prechádzanie medzi uzlami môže byť oboma smermi.
 
 Pre graf implementujte nasledovné metódy:
 
 - `bool add_vertex(Vertex*, int*)` - Pridanie nového uzla do grafu. Metóda má byť ako public člen triedy Vertex. Prvý
-  argument je **pointer na uzol** s ktorým chceme prepojenie vytvoriť. Druhý argument je **váha hrany**, ktorá bude vytvorená
+  argument je **pointer na uzol** s ktorým chceme prepojenie vytvoriť. Druhý argument je **váha hrany**, ktorá bude
+  vytvorená
   medzi týmito dvomi uzlami.
 - `int count(vector<string>*)` - Ak váha hrany predstavuje cenu, ktorú treba zaplatiť aby sme prešli po danej hrane na
   ďalší uzol, tak táto metóda vráti celkovú cenu cesty z uzla na uzol. Argument metódy je cesta prechádzania uzlov, kde
@@ -39,14 +41,8 @@ count({3,1,2,5,1}) == 18;
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
-
-
-Ováhovaný neorientovaný graf implementovaný pomocou triedy `Vertex`. Každý vrchol uchováva informácie o svojich susedoch a váhach hrán.
+Ováhovaný neorientovaný graf implementovaný pomocou triedy `Vertex`. Každý vrchol uchováva informácie o svojich susedoch
+a váhach hrán.
 
 ```cpp
 #include <iostream>
@@ -146,10 +142,11 @@ int main() {
 ```
 
 ### Vysvetlenie
+
 - Každý `Vertex` obsahuje mapu svojich susedov (`unordered_map<string, pair<Vertex*, int>>`), kde:
-  - `string` je `label` suseda,
-  - `Vertex*` je pointer na suseda,
-  - `int` je váha hrany.
+    - `string` je `label` suseda,
+    - `Vertex*` je pointer na suseda,
+    - `int` je váha hrany.
 - Metóda `add_vertex()` zabezpečuje pridanie **obojstrannej hrany** (graf je neorientovaný).
 - Metóda `count()` počíta cenu cesty cez daný zoznam názvov uzlov – ak niektorá hrana chýba, vráti `-1`.
 
@@ -170,7 +167,5 @@ Cost A->D: -1
    /     \
  [B]--2--[C]--4--[D]
 ```
-
--->
 
 {{< /details >}}

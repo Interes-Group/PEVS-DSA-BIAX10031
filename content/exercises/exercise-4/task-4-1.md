@@ -30,13 +30,6 @@ Viac o Bubble sort algoritme sa viete dozvedieť napríklad na stránkach:
 
 {{< details title="Rozbaľ pre ukážku riešenia" closed="true" >}}
 
-Musím si počkať kým sa tu objaví príklad riešenia.
-
-Nezabudni, že najviac sa naučíš ak to vypracuješ sám. 😉
-
-<!--
-
-
 ```cpp
 #include <iostream>
 #include <vector>
@@ -126,5 +119,4 @@ int main() {
 - V `main` sú ukážky troch príkladov: dva pre vzostupné zotriedenie (jeden vrátane prázdneho reťazca) a jeden pre
   zostupné zotriedenie.
 
--->
 {{< /details >}}
