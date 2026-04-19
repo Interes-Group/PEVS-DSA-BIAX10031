@@ -66,10 +66,6 @@ privacy:
   instagram:
     disable: true
     simple: false
-  twitter:
-    disable: true
-    enableDNT: false
-    simple: false
   vimeo:
     disable: true
     enableDNT: false

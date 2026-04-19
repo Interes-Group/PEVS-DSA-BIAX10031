@@ -31,8 +31,6 @@ V prípade otázok, problémov alebo akejkoľvek potreby konzultácií môžte k
 
 ---
 
-# PEVŠ DSA 2026 - Semestrálny projekt 1
-
 # 🛡️ SENTINEL – Systém pre spracovanie sieťových hrozieb
 
 Cieľom zadania je implementovať jednoduchú konzolovú aplikáciu (tzv. CLI - command line interface)
